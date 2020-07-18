@@ -1,0 +1,60 @@
+﻿<Page
+    x:Class="GetToKnowUWP.Pages.Mp3ViewerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GetToKnowUWP.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:control="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <control:TabView Name="Mp3ViewerTabs" 
+                     CanReorderTabs="True" 
+                     CanDragTabs="True">
+
+        <control:TabViewItem Header="Debug_Mp3Viewer">
+            <ScrollViewer>
+                <StackPanel Margin="5,5,5,5" HorizontalAlignment="Center">
+                    <Image Source="/Assets/sampleThumbnail.jpg" Stretch="Uniform" MaxWidth="500" HorizontalAlignment="Center"/>
+                    <Grid Margin="0,20,0,10" ColumnSpacing="10" RowSpacing="2" HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="500"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Name/Tittle" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0"/>
+                        <TextBox PlaceholderText="This is Name/Tittle" Grid.Row="0" Grid.Column="1"/>
+
+                        <TextBlock Text="Artist/Performer" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
+                        <TextBox PlaceholderText="This is Artist/Performer" Grid.Row="1" Grid.Column="1"/>
+
+                        <TextBlock Text="Album" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0"/>
+                        <TextBox PlaceholderText="This is Album" Grid.Row="2" Grid.Column="1"/>
+                    </Grid>
+                </StackPanel>
+            </ScrollViewer>
+        </control:TabViewItem>
+
+        <control:TabViewItem Header="Debug_Waiting" >
+            <Frame>
+                <ScrollViewer>
+                    <RelativePanel x:Name="RelativeInTab">
+                        <Image x:Name="WaitingImg" Source="/Assets/waiting-img.jpg" 
+                        RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+                        <TextBlock Text="We are doing stuff behind. Please wait..." FontSize="64"
+                           RelativePanel.AlignBottomWith="WaitingImg" RelativePanel.AlignHorizontalCenterWith="WaitingImg"/>
+                    </RelativePanel>
+                </ScrollViewer>
+            </Frame>
+        </control:TabViewItem>
+    </control:TabView>
+
+</Page>
