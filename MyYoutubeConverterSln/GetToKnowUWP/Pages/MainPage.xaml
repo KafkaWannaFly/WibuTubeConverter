@@ -3,32 +3,49 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:GetToKnowUWP.Pages"
+    xmlns:vm="using:GetToKnowUWP.ViewModels"
+    xmlns:md="using:GetToKnowUWP.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ctrls="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    
+    <Page.Resources>
+        <ResourceDictionary>
+            <Style TargetType="ctrls:TabViewItem" x:Key="TabHeaderStyle">
+                <Setter Property="Header" Value="New tab"/>
+                <Setter Property="IconSource">
+                    <Setter.Value>
+                        <ctrls:SymbolIconSource Symbol="NewWindow"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Page.Resources>
+
     <ctrls:TabView Name="MainTabView" TabWidthMode="Equal"
                    AddTabButtonClick="MainTabView_AddTabButtonClick" 
                    TabCloseRequested="MainTabView_TabCloseRequested"
                    TabItemsSource="{x:Bind mainPageViewModel.MyTabs}">
-        <!--<ctrls:TabView.TabItemTemplate>
-            <DataTemplate x:DataType="ctrls:TabViewItem">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <CommandBar Grid.Row="0">
-                        <CommandBar.Content>
-                            <Button Style="{StaticResource NavigationBackButtonNormalStyle}" VerticalAlignment="Top"/>
-                        </CommandBar.Content>
-                    </CommandBar>
-                </Grid>
+        <ctrls:TabView.TabItemTemplate>
+            <DataTemplate x:DataType="md:MainPageModel">
+                <ctrls:TabViewItem Header="{x:Bind DefaultTabName}" IconSource="{x:Bind DefaultIcon}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <CommandBar Grid.Row="0" Padding="5,5,5,0" Background="{StaticResource RefreshContainerBackgroundBrush}">
+                            <CommandBar.Content>
+                                <Button Style="{StaticResource NavigationBackButtonNormalStyle}" VerticalAlignment="Top"/>
+                            </CommandBar.Content>
+                        </CommandBar>
+                        <Frame Grid.Row="1" Content="{x:Bind TabPage}"/>
+                    </Grid>
+                </ctrls:TabViewItem>
             </DataTemplate>
-        </ctrls:TabView.TabItemTemplate>-->
-       
+        </ctrls:TabView.TabItemTemplate>
     </ctrls:TabView>
 </Page>

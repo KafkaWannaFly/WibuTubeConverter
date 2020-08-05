@@ -1,69 +1,45 @@
-﻿using GetToKnowUWP.Pages;
+﻿using GetToKnowUWP.Models;
+using GetToKnowUWP.Pages;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
+using Muxc = Microsoft.UI.Xaml.Controls;
 
 namespace GetToKnowUWP.ViewModels
 {
     public class MainPageViewModel
     {
-        private ObservableCollection<TabViewItem> myTabs = new ObservableCollection<TabViewItem>();
-        public ObservableCollection<TabViewItem> MyTabs { get => myTabs; }
+        private ObservableCollection<MainPageModel> myTabs = new ObservableCollection<MainPageModel>();
+        public ObservableCollection<MainPageModel> MyTabs { get => myTabs; }
 
-        readonly string defaultTabName = "New tab";
+            
 
         public MainPageViewModel()
         {
-            this.Add(defaultTabName);
-
-            //var item = new TabViewItem();
-            //item = (TabViewItem)App.Current.Resources["TabItemTemplate"];
-            //this.Add(item);
+            myTabs.Add(new MainPageModel());
         }
 
-        public MainPageViewModel(TabViewItem firstItem)
+        public MainPageViewModel(TabViewItem item)
         {
-            myTabs.Add(firstItem);
-        }
-
-        public MainPageViewModel(string firstItem)
-        {
-            var item = new TabViewItem();
-            item.Header = firstItem;
-
-            Frame frame = new Frame();
-            item.Content = frame;
-            frame.Navigate(typeof(UrlSearchPage));
-
-            myTabs.Add(item);
-        }
-
-        public void Add(string itemHeader)
-        {
-            var item = new TabViewItem();
             
-            item.Header = itemHeader;
-
-            Frame frame = new Frame();
-            item.Content = frame;
-            frame.Navigate(typeof(UrlSearchPage));
-
-            myTabs.Add(item);
         }
 
-        public void Add(TabViewItem item)
+        public void Add(TabView sender, object args)
         {
-            myTabs.Add(item);
+            myTabs.Add(new MainPageModel());
         }
 
-        public bool RemoveItem(TabViewItem item)
+        public bool RemoveItem(MainPageModel item)
         {
-            return myTabs.Remove(item);
+            return this.myTabs.Remove(item);
+            //return this.myTabs.Remove(myTabs.FirstOrDefault(x => x.GetHashCode() == item.GetHashCode()));
+            //return false;
         }
     }
 }

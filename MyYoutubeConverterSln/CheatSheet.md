@@ -25,3 +25,5 @@
 - `VideoLibrary` has `WebClient`, `HttpRequest`,... inside their objects. Try to re-use them as much as possible
 - Windows' **Groove Music** could display mp3 thumbnail properly but **VLC** could
 
+- If define `TabViewItem` without `Header`, its contents may stay on `Header` area instead of page
+- `ResourceDictionary` can be called from code behind like a `Dictionary`. Syntax: `this.Resources`. If `ResourceDictionary` was defined in `App.xaml`, use `App.Current.Resources`

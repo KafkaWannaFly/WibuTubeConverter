@@ -23,6 +23,7 @@ namespace Core.TryYoutubeApi
         /// Files stored in this folder will be deleted when app is closed 
         /// </summary>
         public static string TemporaryFolder = "tmp/";
+        public static string FFmpegPath = "FFmpeg binary";
 
         static string[] videoExtension = 
         {
@@ -34,7 +35,9 @@ namespace Core.TryYoutubeApi
             clientRequest = Client.For(YouTube.Default);
             clientServices = new VideoClient();
 
-            FFmpeg.SetExecutablesPath("FFmpeg binary");
+            FFmpeg.SetExecutablesPath(FFmpegPath);
+
+            
         }
 
         ~YoutubeConverter()
@@ -65,6 +68,10 @@ namespace Core.TryYoutubeApi
             if (!Uri.TryCreate(uri, UriKind.RelativeOrAbsolute, out tmpUri))
             {
                 throw new UriFormatException("Bad URL!");
+            }
+            if(!Directory.Exists(folderToSaveIn))
+            {
+                Directory.CreateDirectory(Path.GetFullPath(folderToSaveIn));
             }
 
             //IEnumerable<YouTubeVideo> youTubeVideos = await clientRequest.GetAllVideosAsync(uri);
@@ -105,6 +112,14 @@ namespace Core.TryYoutubeApi
             return new FileInfo(folderToSaveIn + youTubeVideo.FullName);
         }
 
+        /// <summary>
+        /// Download YouTube video with highest resolution possible but don't have sound
+        /// This is a known problem of YouTube or VideoLibrary
+        /// Alternative solution is download this video one more time (default resolution will have sound). Extract audio from default video and attach to this
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <param name="folderToSaveIn"></param>
+        /// <returns></returns>
         public async Task<FileInfo> DownloadHrVideoAsync(string uri, string folderToSaveIn)
         {
             Uri tmpUri;

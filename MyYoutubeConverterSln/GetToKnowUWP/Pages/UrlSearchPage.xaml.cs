@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GetToKnowUWP.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +23,11 @@ namespace GetToKnowUWP.Pages
     /// </summary>
     public sealed partial class UrlSearchPage : Page
     {
+        public UrlSearchViewModel urlSearchViewModel;
         public UrlSearchPage()
         {
             this.InitializeComponent();
+            //urlSearchViewModel = new UrlSearchViewModel();
         }
     }
 }

@@ -1,10 +1,15 @@
-﻿using System;
+﻿using Core.TryYoutubeApi;
+using GetToKnowUWP.ViewModels.Commands;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace GetToKnowUWP.ViewModels
 {
@@ -22,6 +27,29 @@ namespace GetToKnowUWP.ViewModels
                     this.OnPropertyChanged();
                 }
             }
+        }
+
+        YoutubeConverter youtubeConverter = new YoutubeConverter();
+        public CommadEventHandler<string> GetVideo
+        {
+            get
+            {
+                return new CommadEventHandler<string>(async (s) => { await this.getVideo(s); });
+            }
+        }
+
+        private async Task<FileInfo> getVideo(string url)
+        {
+            try
+            {
+                return await youtubeConverter.DownloadVideoAsync(url, YoutubeConverter.TemporaryFolder);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+
+            return null;
         }
         
 
