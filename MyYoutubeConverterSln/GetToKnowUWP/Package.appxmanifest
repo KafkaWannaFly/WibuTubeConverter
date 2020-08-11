@@ -4,11 +4,12 @@
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
-  IgnorableNamespaces="uap mp">
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap mp rescap">
 
   <Identity
-    Name="871f7e15-e49e-4b05-8ab0-95f1ea74f199"
-    Publisher="CN=tarza"
+    Name="WibuTubeConverter"
+    Publisher="CN=KafkaWannaFly"
     Version="1.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="871f7e15-e49e-4b05-8ab0-95f1ea74f199" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
@@ -32,12 +33,12 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="GetToKnowUWP.App">
       <uap:VisualElements
-        DisplayName="MyConverter"
+        DisplayName="WibuTube Converter"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="GetToKnowUWP"
         BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
         <uap:InitialRotationPreference>
           <uap:Rotation Preference="landscape"/>
@@ -50,5 +51,8 @@
 
   <Capabilities>
     <Capability Name="internetClient" />
+    <Capability Name="internetClientServer"/>
+    <uap:Capability Name="removableStorage"/>
+	<rescap:Capability Name="broadFileSystemAccess" />
   </Capabilities>
 </Package>

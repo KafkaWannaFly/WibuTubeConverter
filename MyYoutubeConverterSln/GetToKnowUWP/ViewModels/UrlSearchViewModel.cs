@@ -7,9 +7,18 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using VideoLibrary;
+using Windows.ApplicationModel;
+using Windows.Security.Cryptography;
+using Windows.Storage;
+using Windows.Storage.AccessCache;
+using Windows.Storage.Pickers;
+using Windows.Storage.Streams;
+using Windows.UI.Popups;
 
 namespace GetToKnowUWP.ViewModels
 {
@@ -42,11 +51,38 @@ namespace GetToKnowUWP.ViewModels
         {
             try
             {
-                return await youtubeConverter.DownloadVideoAsync(url, YoutubeConverter.TemporaryFolder);
+                //var folderPicker = new Windows.Storage.Pickers.FolderPicker();
+                //folderPicker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.Desktop;
+                //folderPicker.FileTypeFilter.Add("*");
+
+                //StorageFolder folder = await folderPicker.PickSingleFolderAsync();
+
+                YouTubeVideo video = await this.youtubeConverter.GetVideoAsync(url);
+
+                StorageFolder folder = ApplicationData.Current.TemporaryFolder;
+                folder = await folder.CreateFolderAsync(YoutubeConverter.TemporaryFolder, CreationCollisionOption.OpenIfExists);
+                StorageApplicationPermissions.FutureAccessList.AddOrReplace("PickedFolderToken", folder);
+
+                StorageFile storageFile = await folder.CreateFileAsync(video.FullName, CreationCollisionOption.ReplaceExisting);
+                using(Stream source = await video.StreamAsync())
+                {
+                    using(var randomAccessStream = await storageFile.OpenAsync(FileAccessMode.ReadWrite))
+                    {
+                        using(var dest = randomAccessStream.AsStream())
+                        {
+                            await source.CopyToAsync(dest);
+                        }
+                    }
+                }
+
+                await new MessageDialog($"Write to: {storageFile.Path}").ShowAsync();
+
+                //return await youtubeConverter.DownloadVideoAsync(url, folder.Path);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
+                await new MessageDialog(ex.Message).ShowAsync();
             }
 
             return null;

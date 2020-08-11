@@ -27,7 +27,7 @@ namespace GetToKnowUWP.Pages
         public UrlSearchPage()
         {
             this.InitializeComponent();
-            //urlSearchViewModel = new UrlSearchViewModel();
+            urlSearchViewModel = new UrlSearchViewModel();
         }
     }
 }

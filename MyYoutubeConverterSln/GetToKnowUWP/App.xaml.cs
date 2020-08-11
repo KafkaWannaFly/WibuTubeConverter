@@ -2,6 +2,7 @@
 using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Storage;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -90,6 +91,12 @@ namespace GetToKnowUWP
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
+            ApplicationData.Current.ClearAsync();
+        }
+
+        ~App()
+        {
+            _ = ApplicationData.Current.ClearAsync();
         }
     }
 }

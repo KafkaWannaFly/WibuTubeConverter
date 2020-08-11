@@ -46,7 +46,7 @@ namespace Core.TryYoutubeApi
                 //long normalRs, highRs;
                 //var stopWatch = new Stopwatch();
                 //stopWatch.Start();
-                FileInfo mp4 = youtubeConverter.DownloadVideoAsync(@"https://www.youtube.com/watch?v=UwxatzcYf9Q&list=PLFJRIUbt-ELjQZqVbzvCGerxXgjGp_Ww5&index=27&t=0s",
+                FileInfo mp4 = youtubeConverter.DownloadVideoAsync(@"https://www.youtube.com/watch?v=d10_sLHZNhA&list=PLFJRIUbt-ELjQZqVbzvCGerxXgjGp_Ww5&index=21",
                                                                     @"tmp/").GetAwaiter().GetResult();
                 //stopWatch.Stop();
                 //normalRs = stopWatch.ElapsedMilliseconds;
@@ -71,7 +71,7 @@ namespace Core.TryYoutubeApi
 
                 youtubeConverter.SetMp3Thumbnail(mp3.FullName, picture.FullName).Wait();
 
-
+                Console.WriteLine($"Save at {mp3.FullName}");
             }
             catch (Exception ex)
             {

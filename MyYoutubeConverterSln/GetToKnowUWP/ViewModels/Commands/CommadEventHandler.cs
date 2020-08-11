@@ -107,18 +107,25 @@ namespace GetToKnowUWP.ViewModels.Commands
         public event EventHandler CanExecuteChanged;
 
         public Action<T> action;
+        Func<bool> canExecute;
+        public CommadEventHandler(Action<T> action)
+        {
+            this.action = action;
+        }
+
+        public CommadEventHandler(Action<T> action, Func<bool> canExecute)
+        {
+            this.action = action;
+            this.canExecute = canExecute;
+        }
         public bool CanExecute(object parameter)
         {
-            return true;
+            return canExecute == null ? true : canExecute();
         }
 
         public void Execute(object parameter)
         {
             this.action((T)parameter);
-        }
-        public CommadEventHandler(Action<T> action)
-        {
-            this.action = action;
         }
     }
 }

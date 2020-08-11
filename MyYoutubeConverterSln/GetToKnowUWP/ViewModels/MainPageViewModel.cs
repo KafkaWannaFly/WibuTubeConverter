@@ -19,7 +19,6 @@ namespace GetToKnowUWP.ViewModels
         public ObservableCollection<MainPageModel> MyTabs { get => myTabs; }
 
             
-
         public MainPageViewModel()
         {
             myTabs.Add(new MainPageModel());

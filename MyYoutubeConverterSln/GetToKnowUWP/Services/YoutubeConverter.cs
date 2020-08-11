@@ -46,7 +46,7 @@ namespace Core.TryYoutubeApi
             clientServices.Dispose();
         }
 
-        public async Task<YouTubeVideo> GetVideoInfoAsync(string url)
+        public async Task<YouTubeVideo> GetVideoAsync(string url)
         {
             Uri uri;
             if (!Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out uri))
