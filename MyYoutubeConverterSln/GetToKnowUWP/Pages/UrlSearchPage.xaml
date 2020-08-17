@@ -7,17 +7,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    NavigationCacheMode="Enabled">
     
     <RelativePanel x:Name="relativeLayout" HorizontalAlignment="Center">
-        <Image x:Name="HomeImage" Width="650" Margin="0,50,0,15" Stretch="Uniform" Source="/Assets/crow.png"
+        <Image x:Name="HomeImage" Width="650" Margin="0,0,0,0" Stretch="Uniform" Source="/Assets/orchestra.jpg"
            HorizontalAlignment="Center" RelativePanel.AlignHorizontalCenterWithPanel="True" />
 
         <Grid x:Name="searchGird"
             RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.Below="HomeImage">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <TextBox x:Name="YoutubeUrlText"

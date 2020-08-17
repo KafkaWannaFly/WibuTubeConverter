@@ -14,7 +14,7 @@
     <Page.Resources>
         <ResourceDictionary>
             <Style TargetType="ctrls:TabViewItem" x:Key="TabHeaderStyle">
-                <Setter Property="Header" Value="New tab"/>
+                <Setter Property="Header" Value="New tab"/>   
                 <Setter Property="IconSource">
                     <Setter.Value>
                         <ctrls:SymbolIconSource Symbol="NewWindow"/>
@@ -37,12 +37,25 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
-                        <CommandBar Grid.Row="0" Padding="5,5,5,0" Background="{StaticResource RefreshContainerBackgroundBrush}">
+                        <CommandBar Grid.Row="0" Padding="5,5,5,0" 
+                                    Background="{StaticResource RefreshContainerBackgroundBrush}" 
+                                    IsDynamicOverflowEnabled="True" DefaultLabelPosition="Right">
                             <CommandBar.Content>
                                 <Button Style="{StaticResource NavigationBackButtonNormalStyle}" VerticalAlignment="Top"/>
                             </CommandBar.Content>
+
+                            <!--Primary command-->
+                            <AppBarButton Icon="Refresh" Label="Flush Tempo Folder" FlowDirection="LeftToRight" 
+                                          Command="{x:Bind FlushCacheCommand}"/>
+
+                            <CommandBar.SecondaryCommands>
+                                <AppBarButton Icon="Folder" Label="Open Tempo Folder"
+                                              Command="{x:Bind OpenTempoFolderCommand}"/>
+                            </CommandBar.SecondaryCommands>
                         </CommandBar>
-                        <Frame Grid.Row="1" Content="{x:Bind TabPage}"/>
+
+                        <ContentControl Grid.Row="1" HorizontalAlignment="Center" Content="{x:Bind Frame}"/>
+
                     </Grid>
                 </ctrls:TabViewItem>
             </DataTemplate>

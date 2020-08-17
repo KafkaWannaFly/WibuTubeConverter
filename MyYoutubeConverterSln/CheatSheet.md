@@ -24,6 +24,6 @@
 - If a class was implemented `IDisposable`, we should dispose it either directly or indirectly. To dispose of the type directly, call its [Dispose](https://docs.microsoft.com/en-us/dotnet/api/system.idisposable.dispose?view=netcore-3.1) method in a `try`/`catch` block. To dispose of it indirectly, use a language construct such as `using`
 - `VideoLibrary` has `WebClient`, `HttpRequest`,... inside their objects. Try to re-use them as much as possible
 - Windows' **Groove Music** could display mp3 thumbnail properly but **VLC** could
-
 - If define `TabViewItem` without `Header`, its contents may stay on `Header` area instead of page
 - `ResourceDictionary` can be called from code behind like a `Dictionary`. Syntax: `this.Resources`. If `ResourceDictionary` was defined in `App.xaml`, use `App.Current.Resources`
+- `Page` should be navigated to from a `Frame` rather than being instantiated. Or else, that `Page.Frame` will be `null` and we can’t navigate to others pages.

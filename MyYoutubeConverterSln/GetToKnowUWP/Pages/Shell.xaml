@@ -8,17 +8,8 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <NavigationView Name="navigationView" PaneDisplayMode="Top"
-                    ItemInvoked="navigationView_ItemInvoked">
-        <NavigationView.MenuItems>
-            <NavigationViewItem Name="MainPageTab" Content="Home" />
-            <NavigationViewItem Name="Mp3ViewerTab" Content="MP3 Viewer" />
-        </NavigationView.MenuItems>
-
-        <NavigationView.Content>
-            <Frame Name="MainFrame">
-                
-            </Frame>
-        </NavigationView.Content>
-    </NavigationView>
+    <StackPanel>
+        <Button x:Name="button" Content="NavigateToMainPage" HorizontalAlignment="Center" VerticalAlignment="Center"
+                Click="button_Click"/>
+    </StackPanel>
 </Page>

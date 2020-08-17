@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection.Metadata;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 //using TagLib;
 using VideoLibrary;
@@ -36,8 +31,6 @@ namespace Core.TryYoutubeApi
             clientServices = new VideoClient();
 
             FFmpeg.SetExecutablesPath(FFmpegPath);
-
-            
         }
 
         ~YoutubeConverter()
@@ -74,29 +67,7 @@ namespace Core.TryYoutubeApi
                 Directory.CreateDirectory(Path.GetFullPath(folderToSaveIn));
             }
 
-            //IEnumerable<YouTubeVideo> youTubeVideos = await clientRequest.GetAllVideosAsync(uri);
-            //if (!youTubeVideos.Any())
-            //{
-            //    throw new Exception($"{nameof(DownloadVideo)}: There are no result");
-            //}
-
-            //YouTubeVideo youTubeVideo = youTubeVideos.First();
-            //foreach (var video in youTubeVideos)
-            //{
-            //    if(video.Resolution > youTubeVideo.Resolution)
-            //    {
-            //        youTubeVideo = video;
-            //    }
-            //}
-
-            //Get highest resolution possible
-            //int highestResolution = (from vid in youTubeVideos select vid.Resolution).Max();
-            //var youTubeVideo = youTubeVideos.FirstOrDefault(vid => vid.Resolution == highestResolution);
-
             YouTubeVideo youTubeVideo = await clientRequest.GetVideoAsync(uri);
-
-            //await File.WriteAllBytesAsync(folderToSaveIn + youTubeVideo.FullName,
-            //    youTubeVideo.GetBytesAsync().GetAwaiter().GetResult());
 
             //Because Stream is implemented IDisposable, we must call Dispose directly or indirectly
             using (Stream sourceStream = await youTubeVideo.StreamAsync())
@@ -106,8 +77,6 @@ namespace Core.TryYoutubeApi
                     await sourceStream.CopyToAsync(destinationStream);
                 }
             }
-
-            //await File.WriteAllBytesAsync(folderToSaveIn + youTubeVideo.FullName, await youTubeVideo.GetBytesAsync());
 
             return new FileInfo(folderToSaveIn + youTubeVideo.FullName);
         }

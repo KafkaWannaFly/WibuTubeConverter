@@ -22,7 +22,7 @@ namespace GetToKnowUWP
         public App()
         {
             this.InitializeComponent();
-            this.Suspending += OnSuspending;
+            this.Suspending += OnSuspendingAsync;
         }
 
         /// <summary>
@@ -59,10 +59,8 @@ namespace GetToKnowUWP
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
-                    //rootFrame.Navigate(typeof(Shell), e.Arguments);
 
-                    var mainPage = new MainPage();
-                    rootFrame.Navigate(mainPage.GetType());
+                    rootFrame.Navigate(typeof(MainPage));
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();
@@ -86,12 +84,12 @@ namespace GetToKnowUWP
         /// </summary>
         /// <param name="sender">The source of the suspend request.</param>
         /// <param name="e">Details about the suspend request.</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
+        private async void OnSuspendingAsync(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
-            ApplicationData.Current.ClearAsync();
+            await ApplicationData.Current.ClearAsync();
         }
 
         ~App()

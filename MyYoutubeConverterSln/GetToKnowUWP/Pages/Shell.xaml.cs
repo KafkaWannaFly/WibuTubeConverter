@@ -12,26 +12,11 @@ namespace GetToKnowUWP.Pages
         public Shell()
         {
             this.InitializeComponent();
-
-            if(MainFrame.Content == null)
-            {
-                this.MainFrame.Navigate(typeof(MainPage));
-                this.navigationView.SelectedItem = this.MainPageTab;
-            }
         }
 
-        private void navigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        private void button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            NavigationViewItem viewItem = (NavigationViewItem)sender.SelectedItem;
-            if (viewItem.Name == this.MainPageTab.Name)
-            {
-                this.MainFrame.Navigate(typeof(MainPage), args);
-            }
-            else if (viewItem.Name == this.Mp3ViewerTab.Name)
-            {
-                this.MainFrame.Navigate(typeof(Mp3ViewerPage), args);
-            }
+            Frame?.Navigate(typeof(MainPage));
         }
-
     }
 }

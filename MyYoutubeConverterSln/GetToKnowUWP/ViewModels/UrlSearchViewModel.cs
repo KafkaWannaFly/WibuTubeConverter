@@ -1,49 +1,40 @@
 ﻿using Core.TryYoutubeApi;
 using GetToKnowUWP.ViewModels.Commands;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using VideoLibrary;
-using Windows.ApplicationModel;
-using Windows.Security.Cryptography;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
-using Windows.Storage.Pickers;
-using Windows.Storage.Streams;
 using Windows.UI.Popups;
 
 namespace GetToKnowUWP.ViewModels
 {
     public class UrlSearchViewModel: INotifyPropertyChanged
     {
-        private string youtubeURL;
-        public string YoutubeURL
-        {
-            get => youtubeURL;
-            set
-            {
-                if(youtubeURL != value)
-                {
-                    this.youtubeURL = value;
-                    this.OnPropertyChanged();
-                }
-            }
-        }
 
         YoutubeConverter youtubeConverter = new YoutubeConverter();
-        public CommadEventHandler<string> GetVideo
+
+        /// <summary>
+        /// Invoked when video is completely downloaded.
+        /// Param is FileInfo of that video
+        /// </summary>
+        public Action<FileInfo> OnGetVideoCompleted;
+        public CommandEventHandler<string> GetVideo
         {
             get
             {
-                return new CommadEventHandler<string>(async (s) => { await this.getVideo(s); });
+                return new CommandEventHandler<string>(async (s) => 
+                { 
+                    FileInfo mp4 = await this.getVideo(s);
+                    if (mp4 != null)
+                    {
+                        this.OnGetVideoCompleted.Invoke(mp4);
+                    }
+                });
             }
         }
 
@@ -51,12 +42,6 @@ namespace GetToKnowUWP.ViewModels
         {
             try
             {
-                //var folderPicker = new Windows.Storage.Pickers.FolderPicker();
-                //folderPicker.SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.Desktop;
-                //folderPicker.FileTypeFilter.Add("*");
-
-                //StorageFolder folder = await folderPicker.PickSingleFolderAsync();
-
                 YouTubeVideo video = await this.youtubeConverter.GetVideoAsync(url);
 
                 StorageFolder folder = ApplicationData.Current.TemporaryFolder;
@@ -77,7 +62,7 @@ namespace GetToKnowUWP.ViewModels
 
                 await new MessageDialog($"Write to: {storageFile.Path}").ShowAsync();
 
-                //return await youtubeConverter.DownloadVideoAsync(url, folder.Path);
+                return new FileInfo(storageFile.Path);
             }
             catch (Exception ex)
             {
