@@ -136,6 +136,14 @@ namespace Core.TryYoutubeApi
             return await this.ConvertVideoToMp3Async(source.FullName, dest);
         }
 
+        /// <summary>
+        /// Take a picture of video at a specific second 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="second"></param>
+        /// <returns>
+        /// Jpeg picture in same folder of video
+        /// </returns>
         public async Task<FileInfo> GetVideoSnapshotAsync(string source, double second)
         {
             FileInfo fileInfo = new FileInfo(source);

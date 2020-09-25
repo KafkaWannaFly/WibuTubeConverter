@@ -9,8 +9,59 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <TextBlock x:Name="textBlock"
+    <ScrollViewer>
+        <RelativePanel x:Name="contentGroup" HorizontalAlignment="Center">
+
+            <Image x:Name="thumbnail" Source="{x:Bind mp3ViewerViewModel.mp3ViewerModel.ImagePath}" Stretch="Uniform"
+               MinHeight="200" MaxHeight="400" Margin="0,20,0,0"/>
+            <Grid x:Name="detailGrid"
+              RelativePanel.Below="thumbnail" RelativePanel.AlignHorizontalCenterWithPanel="True" 
+              Margin="0,15,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" 
+                       Text="Tittle/Name"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Margin="5"
+                     PlaceholderText="Enter the song's tittle here" 
+                     Text="{x:Bind mp3ViewerViewModel.mp3ViewerModel.Tittle}"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" 
+                       Text="Artist/Performer"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Margin="5"
+                     PlaceholderText="Name of performers"
+                     Text="{x:Bind mp3ViewerViewModel.mp3ViewerModel.Performers}"/>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"
+                       Text="Album"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Margin="5"
+                     PlaceholderText="Name of the album"
+                     Text="{x:Bind mp3ViewerViewModel.mp3ViewerModel.Album}"/>
+
+                <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"
+                       Text="Snapshot"/>
+                <Slider Grid.Row="3" Grid.Column="1" Margin="5"
+                    Minimum="0" Maximum="{x:Bind mp3ViewerViewModel.mp3ViewerModel.Duration}"
+                    Value="{x:Bind mp3ViewerViewModel.mp3ViewerModel.Snapshot}"/>
+            </Grid>
+            <Button RelativePanel.Below="detailGrid" RelativePanel.AlignRightWith="detailGrid"
+                Foreground="White" BorderBrush="#FF004CFF" Background="#FF0096FF" 
+                Content="Save As"/>
+        </RelativePanel>
+    </ScrollViewer>
+    
+    
+
+    <!--<TextBlock x:Name="textBlock"
         Text="This is Mp3ViewerPage" FontSize="32" 
-               HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
+               HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>-->
 
 </Page>

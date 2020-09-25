@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using GetToKnowUWP.ViewModels;
+using System;
 using System.IO;
+using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -7,9 +9,10 @@ using Windows.UI.Xaml.Navigation;
 
 namespace GetToKnowUWP.Pages
 {
-
+    
     public sealed partial class Mp3ViewerPage : Page
     {
+        Mp3ViewerViewModel mp3ViewerViewModel;
         public Mp3ViewerPage()
         {
             this.InitializeComponent();
@@ -17,12 +20,22 @@ namespace GetToKnowUWP.Pages
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            FileInfo mp4 = (FileInfo) e.Parameter;
-            if(mp4 != null)
+            try
             {
-                this.textBlock.Text = $"Video source:\n{mp4.FullName}";
+                base.OnNavigatedTo(e);
+
+                FileInfo mp4 = (FileInfo)e.Parameter;
+                if (mp4 != null)
+                {
+                    this.mp3ViewerViewModel = new Mp3ViewerViewModel(mp4);
+                }
             }
-            base.OnNavigatedTo(e);
+            catch (System.Exception ex)
+            {
+                var mess = new MessageDialog(ex.Message);
+                var awt = mess.ShowAsync().GetAwaiter().GetResult();
+            }
+            
         }
     }
 }
