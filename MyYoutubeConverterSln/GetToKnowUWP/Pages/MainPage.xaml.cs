@@ -31,7 +31,7 @@ namespace GetToKnowUWP.Pages
         }
 
         private void MainTabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
-        { 
+        {
             MainTabView.TabItems.Remove(args.Tab);
             mainPageViewModel.RemoveItem((MainPageModel)args.Item);
         }

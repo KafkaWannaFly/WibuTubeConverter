@@ -1,4 +1,5 @@
 ﻿using GetToKnowUWP.ViewModels;
+using GetToKnowUWP.ViewModels.Commands;
 using System;
 using System.IO;
 using Windows.UI.Popups;
@@ -12,7 +13,7 @@ namespace GetToKnowUWP.Pages
     
     public sealed partial class Mp3ViewerPage : Page
     {
-        Mp3ViewerViewModel mp3ViewerViewModel;
+        Mp3ViewerViewModel mp3ViewerViewModel = new Mp3ViewerViewModel();
         public Mp3ViewerPage()
         {
             this.InitializeComponent();
@@ -27,7 +28,7 @@ namespace GetToKnowUWP.Pages
                 FileInfo mp4 = (FileInfo)e.Parameter;
                 if (mp4 != null)
                 {
-                    this.mp3ViewerViewModel = new Mp3ViewerViewModel(mp4);
+                    this.mp3ViewerViewModel.Init(mp4);
                 }
             }
             catch (System.Exception ex)
@@ -36,6 +37,14 @@ namespace GetToKnowUWP.Pages
                 var awt = mess.ShowAsync().GetAwaiter().GetResult();
             }
             
+        }
+
+        CommandEventHandler<bool> UseSnapshotCmd
+        {
+            get
+            {
+                return mp3ViewerViewModel.mp3ViewerModel.UseSnapshotCommand;
+            }
         }
     }
 }

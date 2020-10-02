@@ -24,7 +24,7 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <ctrls:TabView Name="MainTabView" TabWidthMode="Equal"
+    <ctrls:TabView x:Name="MainTabView" TabWidthMode="Equal"
                    AddTabButtonClick="MainTabView_AddTabButtonClick" 
                    TabCloseRequested="MainTabView_TabCloseRequested"
                    TabItemsSource="{x:Bind mainPageViewModel.MyTabs}">

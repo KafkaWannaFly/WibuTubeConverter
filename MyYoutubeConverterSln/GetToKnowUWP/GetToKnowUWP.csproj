@@ -152,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\crow.png" />
+    <Content Include="Assets\default_thumbnail.jpg" />
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-125.png" />
     <Content Include="Assets\LargeTile.scale-150.png" />

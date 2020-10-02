@@ -1,5 +1,6 @@
 ﻿using GetToKnowUWP.Pages;
 using System;
+using System.IO;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
@@ -21,8 +22,16 @@ namespace GetToKnowUWP
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
-            this.Suspending += OnSuspendingAsync;
+            try
+            {
+                this.InitializeComponent();
+                this.Suspending += OnSuspendingAsync;
+            }
+            catch (Exception e)
+            {
+                File.WriteAllText("Log.txt", e.Message);
+            }
+            
         }
 
         /// <summary>
