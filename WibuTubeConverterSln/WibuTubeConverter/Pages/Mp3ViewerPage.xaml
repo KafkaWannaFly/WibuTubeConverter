@@ -1,0 +1,80 @@
+﻿<Page
+    x:Class="WibuTubeConverter.Pages.Mp3ViewerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WibuTubeConverter.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:control="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <ScrollViewer>
+        <RelativePanel x:Name="contentGroup" HorizontalAlignment="Center">
+
+            <Image x:Name="thumbnail" CacheMode="BitmapCache"
+                   MinHeight="200" MaxHeight="400" Margin="0,20,0,0" Stretch="Uniform" 
+                   Source="{x:Bind mp3ViewerViewModel.mp3ViewerModel.ImagePath, Mode=OneWay}"/>
+            <Grid x:Name="detailGrid"
+                  RelativePanel.Below="thumbnail" RelativePanel.AlignHorizontalCenterWith="thumbnail"
+                  Margin="0,15,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="350"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                        Text="Tittle/Name"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Margin="5" 
+                         PlaceholderText="Enter the song's tittle here" 
+                         Text="{x:Bind mp3ViewerViewModel.mp3ViewerModel.Tittle}"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" 
+                        Text="Artist/Performer"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Margin="5"
+                         PlaceholderText="Name of performers"
+                         Text="{x:Bind mp3ViewerViewModel.mp3ViewerModel.Performers}"/>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5"
+                        Text="Album"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Margin="5"
+                         PlaceholderText="Name of the album"
+                         Text="{x:Bind mp3ViewerViewModel.mp3ViewerModel.Album}"/>
+
+                <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Stretch" Margin="5"
+                            Text="Snapshot"/>
+                <StackPanel Grid.Row="3" Grid.Column="1" Margin="5">
+                    <Slider x:Name="SnapshotSlider"
+                            Minimum="0" Maximum="{x:Bind mp3ViewerViewModel.mp3ViewerModel.Duration}"
+                            Value="{x:Bind mp3ViewerViewModel.mp3ViewerModel.Snapshot}"
+                            IsEnabled="{x:Bind mp3ViewerViewModel.mp3ViewerModel.UseSnapshot, Mode=OneWay}"
+                            />
+                    
+                    <CheckBox x:Name="UseSnapshotCheckBox" Content="Use Video Snapshot"
+                              IsChecked="{x:Bind mp3ViewerViewModel.mp3ViewerModel.UseSnapshot}" 
+                              Command="{x:Bind mp3ViewerViewModel.mp3ViewerModel.UseSnapshotCommand}"
+                              CommandParameter="{Binding ElementName=UseSnapshotCheckBox, Path=IsChecked}"/>
+                </StackPanel>
+
+            </Grid>
+            <Button x:Name="SaveButton"
+                    RelativePanel.Below="detailGrid" RelativePanel.AlignRightWith="detailGrid"
+                    Foreground="White" BorderBrush="#FF004CFF" Background="#FF0096FF" 
+                    Content="Save As"
+                    />
+        </RelativePanel>
+    </ScrollViewer>
+    
+    
+
+    <!--<TextBlock x:Name="textBlock"
+        Text="This is Mp3ViewerPage" FontSize="32" 
+               HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>-->
+
+</Page>

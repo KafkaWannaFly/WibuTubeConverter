@@ -1,0 +1,47 @@
+﻿<Application
+    x:Class="WibuTubeConverter.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WibuTubeConverter" 
+    xmlns:localPages="using:WibuTubeConverter.Pages"
+    xmlns:ctrls="using:Microsoft.UI.Xaml.Controls">
+    
+    
+    <Application.Resources>
+        <!--<ResourceDictionary>
+            --><!--<Style TargetType="ctrls:TabViewItem" x:Key="TabItemTemplate">
+                <Setter Property="Header" Value="New tab"/>
+                <Setter Property="IconSource">
+                    <Setter.Value>
+                        <ctrls:SymbolIconSource Symbol="NewWindow"/>
+                    </Setter.Value>
+                </Setter>
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <CommandBar Grid.Row="0">
+                                    <CommandBar.Content>
+                                        <Button Style="{StaticResource NavigationBackButtonNormalStyle}" VerticalAlignment="Top"/>
+                                    </CommandBar.Content>
+                                </CommandBar>
+                                <localPages:UrlSearchPage/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>--><!--
+        </ResourceDictionary>-->
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
