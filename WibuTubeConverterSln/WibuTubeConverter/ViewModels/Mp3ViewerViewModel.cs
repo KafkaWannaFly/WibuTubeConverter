@@ -68,7 +68,15 @@ namespace WibuTubeConverter.ViewModels
                     ffmpegInteropMSS = await FFmpegInteropMSS.CreateFromStreamAsync(await mp4.OpenAsync(FileAccessMode.ReadWrite));
                 }
 
-                StorageFile imgFile = await ApplicationData.Current.TemporaryFolder.CreateFileAsync(imgName, CreationCollisionOption.GenerateUniqueName);
+                var tmpFolder = ApplicationData.Current.TemporaryFolder;
+                StorageFile imgFile = (StorageFile) await tmpFolder.TryGetItemAsync(Path.GetFileName(mp3ViewerModel.ImagePath));
+
+                if (imgFile == null)
+                {
+                    imgFile = await tmpFolder.CreateFileAsync(imgName, CreationCollisionOption.ReplaceExisting);
+                }
+
+                await imgFile.RenameAsync(second.ToString() + imgName);
 
                 MediaComposition mediaComposition = new MediaComposition();
                 MediaClip mediaClip = await MediaClip.CreateFromFileAsync(mp4);
