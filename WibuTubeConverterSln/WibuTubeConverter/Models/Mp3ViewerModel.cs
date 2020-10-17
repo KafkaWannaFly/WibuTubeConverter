@@ -98,7 +98,7 @@ namespace WibuTubeConverter.Models
         //    }
         //}
 
-        string imagePath = "/Assets/default_thumbnail.jpg";
+        string imagePath = "/Assets/total-black.png";
         string defaultImg = "/Assets/default_thumbnail.jpg";
         public string ImagePath 
         {

@@ -16,6 +16,10 @@ namespace WibuTubeConverter
     /// </summary>
     sealed partial class App : Application
     {
+        static public StorageFolder TemporaryFolder 
+        { 
+            get => ApplicationData.Current.TemporaryFolder; 
+        }
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -32,6 +36,11 @@ namespace WibuTubeConverter
                 File.WriteAllText("Log.txt", e.Message);
             }
             
+        }
+
+        private async void OnWindowClose(object sender, Windows.UI.Core.CoreWindowEventArgs e)
+        {
+            await ApplicationData.Current.ClearAsync(ApplicationDataLocality.Local);
         }
 
         /// <summary>
@@ -100,6 +109,7 @@ namespace WibuTubeConverter
             deferral.Complete();
             await ApplicationData.Current.ClearAsync();
         }
+
 
         ~App()
         {

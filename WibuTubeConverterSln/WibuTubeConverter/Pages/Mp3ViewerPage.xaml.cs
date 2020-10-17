@@ -12,6 +12,7 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml.Input;
 using GetToKnowUWP.Services;
 using System.Threading;
+using Windows.Storage;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -57,7 +58,11 @@ namespace WibuTubeConverter.Pages
         {
             try
             {
-                await this.mp3ViewerViewModel.UpdateSnapshotPreview(SnapshotSlider.Value);
+                Slider slider = (Slider)sender;
+                if (slider != null)
+                {
+                    await this.mp3ViewerViewModel.UpdateSnapshotPreview(slider.Value);
+                }
             }
             catch (Exception ex)
             {

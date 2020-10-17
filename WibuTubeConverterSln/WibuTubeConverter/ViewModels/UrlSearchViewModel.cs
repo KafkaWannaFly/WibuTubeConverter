@@ -49,7 +49,7 @@ namespace WibuTubeConverter.ViewModels
             {
                 YouTubeVideo video = await this.youtubeConverter.GetVideoAsync(url);
 
-                StorageFolder folder = ApplicationData.Current.TemporaryFolder;
+                StorageFolder folder = App.TemporaryFolder;
 
                 //StorageFolder folder = await DownloadsFolder.CreateFolderAsync(YoutubeConverter.TemporaryFolder, CreationCollisionOption.OpenIfExists);
 
