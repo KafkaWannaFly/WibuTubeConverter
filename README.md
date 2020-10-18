@@ -21,7 +21,7 @@ This app provide a few functionalities that helps your song look nice. Say goodb
 
 ## Additional Information
 
-###Temporary Folder
+### Temporary Folder
 
 <img align="center" src="README.assets/image-20201018152919867.png">
 
