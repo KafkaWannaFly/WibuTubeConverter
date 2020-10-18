@@ -1,43 +1,114 @@
-﻿using Core.TryYoutubeApi;
-using WibuTubeConverter.Models;
+﻿using WibuTubeConverter.Models;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System;
 using Windows.UI.Popups;
-using FFmpegInterop;
 using Windows.Storage;
-using Windows.Storage.Streams;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Storage.FileProperties;
 using Windows.Media.Editing;
-using Windows.Graphics.Imaging;
 using WibuTubeConverter.ViewModels.Commands;
-using Windows.ApplicationModel.Store;
-using Windows.UI.Xaml.Media.Imaging;
 using System.Collections.Generic;
 using Windows.System.Threading;
+using Windows.Storage.Pickers;
+using Windows.Media.MediaProperties;
+using Windows.Media.Transcoding;
 
 namespace WibuTubeConverter.ViewModels
 {
-    public class Mp3ViewerViewModel: INotifyPropertyChanged
+    public class Mp3ViewerViewModel
     {
         public Mp3ViewerModel mp3ViewerModel = new Mp3ViewerModel();
-        YoutubeConverter youtubeConverter = new YoutubeConverter();
-        TagLib.File mediaDetail;
+
         string mp4Path;
         StorageFile mp4;
-        FFmpegInteropMSS ffmpegInteropMSS;
-
-        Queue<IStorageFile> deletedLater = new Queue<IStorageFile>();
-        ThreadPoolTimer periodicCleaner = null;
 
         public Mp3ViewerViewModel()
         {
-            this.periodicCleaner = this.periodicThumbnailImageCleaner(1, deletedLater);
+
+        }
+        
+        public CommandEventHandler<object> SaveAsButtonCmd
+        {
+            get
+            {
+                return new CommandEventHandler<object>(async (obj) => await SaveButtonClicked(),
+                    () => !String.IsNullOrEmpty(mp3ViewerModel.Tittle));
+            }
         }
 
+        private async Task SaveButtonClicked()
+        {
+            try
+            {
+                FileSavePicker savePicker = new FileSavePicker();
+                savePicker.CommitButtonText = "Save as";
+                savePicker.SuggestedFileName = mp3ViewerModel.Tittle;
+                savePicker.FileTypeChoices.Add("Audio", new List<string> { ".mp3" });
+                StorageFile mp3 = await savePicker.PickSaveFileAsync();
+                if(mp3 == null)
+                {
+                    return;
+                }
+
+                //Some functions got "Access Denied", so we have to write to this place and copy the chosen later
+                StorageFile pseudoMp3 = await App.TemporaryFolder.CreateFileAsync(mp3.Name);
+                pseudoMp3 = await ConvertToMp3(mp4, pseudoMp3);
+
+                setThumbnail(pseudoMp3.Path, mp3ViewerModel.ImagePath);
+
+                MusicProperties musicProperties = await pseudoMp3.Properties.GetMusicPropertiesAsync();
+                musicProperties.Title = mp3ViewerModel.Tittle;
+                musicProperties.Artist = mp3ViewerModel.Performers;
+                musicProperties.AlbumArtist = mp3ViewerModel.Performers;
+                musicProperties.Album = mp3ViewerModel.Album;
+
+                await musicProperties.SavePropertiesAsync();
+                await pseudoMp3.Properties.SavePropertiesAsync();
+
+                //When writing finish, copy info to chosen place
+                await pseudoMp3.CopyAndReplaceAsync(mp3);
+                
+                await new MessageDialog($"Done. Save file to {mp3.Path}").ShowAsync();
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message).ShowAsync();
+            }
+        }
+
+        private void setThumbnail(string mp3Path, string imgPath)
+        {
+            TagLib.File mp3 = TagLib.File.Create(mp3Path);
+
+            TagLib.Picture picture = new TagLib.Picture(imgPath)
+            {
+                Type = TagLib.PictureType.FrontCover,
+                Description = "Cover",
+                MimeType = System.Net.Mime.MediaTypeNames.Image.Jpeg,
+            };
+
+            mp3.Tag.Pictures = new TagLib.Picture[] { picture };
+            mp3.Save();
+        }
+
+        private async Task<StorageFile> ConvertToMp3(StorageFile src, StorageFile dest)
+        {
+            MediaEncodingProfile profile = MediaEncodingProfile.CreateMp3(AudioEncodingQuality.High);
+
+            MediaTranscoder mediaTranscoder = new MediaTranscoder();
+            mediaTranscoder.HardwareAccelerationEnabled = true;
+
+            PrepareTranscodeResult prepareTranscode = await mediaTranscoder.PrepareFileTranscodeAsync(src, dest, profile);
+            if (prepareTranscode.CanTranscode)
+            {
+                await prepareTranscode.TranscodeAsync();
+            }
+
+            return dest;
+        }
         
         public CommandEventHandler<double> UpdateSnapshotCmd
         {
@@ -49,14 +120,16 @@ namespace WibuTubeConverter.ViewModels
             }
         }
 
-        public void Init(FileInfo _mp4)
+        public async Task InitAsync(FileInfo _mp4)
         {
             mp4Path = _mp4.FullName;
-            this.mediaDetail = TagLib.File.Create(_mp4.FullName);
+            mp4 = await StorageFile.GetFileFromPathAsync(mp4Path);
 
-            this.mp3ViewerModel.Tittle = Path.GetFileNameWithoutExtension(_mp4.Name);
-            this.mp3ViewerModel.Duration = this.mediaDetail.Properties.Duration.TotalSeconds;
 
+            mp3ViewerModel.Tittle = Path.GetFileNameWithoutExtension(_mp4.Name);
+
+            MediaClip mediaClip = await MediaClip.CreateFromFileAsync(mp4);
+            mp3ViewerModel.Duration = mediaClip.OriginalDuration.TotalSeconds;
         }
 
         public async Task UpdateSnapshotPreview(double second)
@@ -70,25 +143,14 @@ namespace WibuTubeConverter.ViewModels
 
                 var imgName = Path.ChangeExtension(mp4.Name, ".jpg");
 
-                if (ffmpegInteropMSS == null)
-                {
-                    ffmpegInteropMSS = await FFmpegInteropMSS.CreateFromStreamAsync(await mp4.OpenAsync(FileAccessMode.ReadWrite));
-                }
-
                 StorageFolder tmpFolder = App.TemporaryFolder;
-
-                StorageFile oldImg = (StorageFile)await tmpFolder.TryGetItemAsync(imgName);
-                if(oldImg != null)
-                {
-                    deletedLater.Enqueue(oldImg);
-                }
 
                 StorageFile imgFile = await tmpFolder.CreateFileAsync(imgName, CreationCollisionOption.GenerateUniqueName);
 
                 MediaComposition mediaComposition = new MediaComposition();
                 MediaClip mediaClip = await MediaClip.CreateFromFileAsync(mp4);
                 mediaComposition.Clips.Add(mediaClip);
-                
+
                 var interval = TimeSpan.FromSeconds(second);
                 var thumbnail = await mediaComposition.GetThumbnailAsync(interval, 
                     1024, 768, VideoFramePrecision.NearestKeyFrame);
@@ -109,50 +171,9 @@ namespace WibuTubeConverter.ViewModels
             
         }
 
-        /// <summary>
-        /// To do preview snapshot function, we have to create a bunch of image files each time slider value changed
-        /// <br/>
-        /// So, this cleaner guy will go checking and deleting un-used images
-        /// </summary>
-        /// <param name="eachSecond">Time between each clean</param>
-        /// <param name="images">List of images which are going to be deleted forever</param>
-        /// <returns>ThreadPoolTimer that represents the task</returns>
-        ThreadPoolTimer periodicThumbnailImageCleaner(int eachSecond, Queue<IStorageFile> images)
-        {
-            TimeSpan interval = TimeSpan.FromSeconds(eachSecond * 1000);
-            ThreadPoolTimer cleaner = ThreadPoolTimer.CreatePeriodicTimer(
-                async (source) =>
-                {
-                    Queue<Task> deleting = new Queue<Task>();
-                    while (images.Count > 0)
-                    {
-                        var img = images.Dequeue();
-                        deleting.Enqueue(
-                            Task.Run(
-                                async () => await img.DeleteAsync(StorageDeleteOption.PermanentDelete)
-                                )
-                            );
-                    }
-                    await Task.WhenAll(deleting);
-                }, interval);
-
-            return cleaner;
-        }
-
         ~Mp3ViewerViewModel()
         {
-            if(periodicCleaner != null)
-            {
-                periodicCleaner.Cancel();
-            }
-        }
 
-        #region PropertyChanged Implementation
-        public event PropertyChangedEventHandler PropertyChanged;
-        void OnPropertyChanged([CallerMemberName] string propName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
-        #endregion
     }
 }

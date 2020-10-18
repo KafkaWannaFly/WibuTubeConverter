@@ -30,7 +30,8 @@
                    TabItemsSource="{x:Bind mainPageViewModel.MyTabs}">
         <ctrls:TabView.TabItemTemplate>
             <DataTemplate x:DataType="md:MainPageModel">
-                <ctrls:TabViewItem Header="{x:Bind DefaultTabName}" IconSource="{x:Bind DefaultIcon}">
+                <ctrls:TabViewItem Header="{x:Bind DefaultTabName, Mode=OneWay}" 
+                                   IconSource="{x:Bind DefaultIcon}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -41,7 +42,14 @@
                                     Background="{StaticResource RefreshContainerBackgroundBrush}" 
                                     IsDynamicOverflowEnabled="True" DefaultLabelPosition="Right">
                             <CommandBar.Content>
-                                <Button Style="{StaticResource NavigationBackButtonNormalStyle}" VerticalAlignment="Top"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button FontFamily="Segoe MDL2 Assets" Content="&#xE72B;" FontSize="18"
+                                            Background="White" VerticalAlignment="Center" Margin="0,0,5,0"
+                                            Command="{x:Bind GoBackCommand}"/>
+                                    <Button FontFamily="Segoe MDL2 Assets" Content="&#xE72A;" FontSize="18"
+                                            Background="White" VerticalAlignment="Center" Margin="5,0,0,0"
+                                            Command="{x:Bind GoForwardCommand}"/>
+                                </StackPanel>
                             </CommandBar.Content>
 
                             <!--Primary command-->

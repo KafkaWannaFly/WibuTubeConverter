@@ -1,12 +1,6 @@
 ﻿using WibuTubeConverter.ViewModels.Commands;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml.Media.Imaging;
 
 namespace WibuTubeConverter.Models
 {
@@ -75,28 +69,6 @@ namespace WibuTubeConverter.Models
             } 
         }
         double snapshot = 0f;
-
-        //BitmapImage defaultThumbnailImage = new BitmapImage(new Uri("ms-appx:///Assets/default_thumbnail.jpg"));
-        //BitmapImage thumbnailImage = new BitmapImage();
-        //public BitmapImage ThumbnailImage
-        //{
-        //    get
-        //    {
-        //        if(UseSnapshot)
-        //        {
-        //            return defaultThumbnailImage;
-        //        }
-        //        else
-        //        {
-        //            return thumbnailImage;
-        //        }
-        //    }
-        //    set
-        //    {
-        //        thumbnailImage = value;
-        //        OnPropertyChanged();
-        //    }
-        //}
 
         string imagePath = "/Assets/total-black.png";
         string defaultImg = "/Assets/default_thumbnail.jpg";

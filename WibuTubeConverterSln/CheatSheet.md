@@ -1,6 +1,6 @@
 ### Main Page
 
-- `MainPage `has a `TabView `which contains many tabs
+- `MainPage ` has a `TabView ` which contains many tabs
 - Each tab handles a conversion and is bound to one `YoutubeConverter` object
 - Default page of `TabViewItem` is Google-like: Search bar and button. User would paste YouTube URL into it
 - When press search button, load waiting picture and try to download mp4
@@ -16,8 +16,8 @@
 #### Mp3ViewerPage
 
 - This page's used for preparing before convert
-- In here, user will define Name/Tittle, Artist/Performer, Album, Thumbnail cover, Begin/End time for mp3 which is relative to mp4
-- Also where to save file 
+- In here, user will define Name/Tittle, Artist/Performer, Album, Thumbnail cover,...
+- Also, choose where to save file 
 
 ### Dev Note
 
@@ -26,4 +26,7 @@
 - Windows' **Groove Music** could display mp3 thumbnail properly but **VLC** could
 - If define `TabViewItem` without `Header`, its contents may stay on `Header` area instead of page
 - `ResourceDictionary` can be called from code behind like a `Dictionary`. Syntax: `this.Resources`. If `ResourceDictionary` was defined in `App.xaml`, use `App.Current.Resources`
-- `Page` should be navigated to from a `Frame` rather than being instantiated. Or else, that `Page.Frame` will be `null` and we can’t navigate to others pages.
+- `Page` should be navigated to from a `Frame` rather than being instantiated. Or else, that `Page.Frame` will be `null` and we can’t navigate to others pages
+- When binary content of an image file is changed, `Image` object’s pointing to it wouldn’t update value even we have casted `OnPropertyChanged`
+- Read and write file in UWP are so painful, they only allow operation on some specific folder
+- Without `IStorageFile`/`IStorageFolder` API, we will mostly be `Access Denied`. One way to   solve is do reading/writing in UWP default folder and copy content to desired place later

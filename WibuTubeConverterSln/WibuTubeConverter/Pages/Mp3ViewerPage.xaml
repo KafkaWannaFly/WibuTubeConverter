@@ -33,26 +33,27 @@
                         Text="Tittle/Name"/>
                 <TextBox Grid.Row="0" Grid.Column="1" Margin="5" 
                          PlaceholderText="Enter the song's tittle here" 
-                         Text="{x:Bind mp3ViewerViewModel.mp3ViewerModel.Tittle}"/>
+                         Text="{x:Bind mp3ViewerViewModel.mp3ViewerModel.Tittle, Mode=TwoWay}"/>
 
                 <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" 
                         Text="Artist/Performer"/>
                 <TextBox Grid.Row="1" Grid.Column="1" Margin="5"
                          PlaceholderText="Name of performers"
-                         Text="{x:Bind mp3ViewerViewModel.mp3ViewerModel.Performers}"/>
+                         Text="{x:Bind mp3ViewerViewModel.mp3ViewerModel.Performers, Mode=TwoWay}"/>
 
-                <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5"
-                        Text="Album"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" 
+                           VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5"
+                           Text="Album"/>
                 <TextBox Grid.Row="2" Grid.Column="1" Margin="5"
                          PlaceholderText="Name of the album"
-                         Text="{x:Bind mp3ViewerViewModel.mp3ViewerModel.Album}"/>
+                         Text="{x:Bind mp3ViewerViewModel.mp3ViewerModel.Album, Mode=TwoWay}"/>
 
                 <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Stretch" Margin="5"
                             Text="Snapshot"/>
                 <StackPanel Grid.Row="3" Grid.Column="1" Margin="5">
                     <Slider x:Name="SnapshotSlider"
-                            Minimum="0" Maximum="{x:Bind mp3ViewerViewModel.mp3ViewerModel.Duration}"
-                            Value="{x:Bind mp3ViewerViewModel.mp3ViewerModel.Snapshot}"
+                            Minimum="0" Maximum="{x:Bind mp3ViewerViewModel.mp3ViewerModel.Duration, Mode=OneWay}"
+                            Value="{x:Bind mp3ViewerViewModel.mp3ViewerModel.Snapshot, Mode=OneWay}"
                             IsEnabled="{x:Bind mp3ViewerViewModel.mp3ViewerModel.UseSnapshot, Mode=OneWay}"
                             />
                     
@@ -67,6 +68,7 @@
                     RelativePanel.Below="detailGrid" RelativePanel.AlignRightWith="detailGrid"
                     Foreground="White" BorderBrush="#FF004CFF" Background="#FF0096FF" 
                     Content="Save As"
+                    Command="{x:Bind mp3ViewerViewModel.SaveAsButtonCmd, Mode=OneWay}"
                     />
         </RelativePanel>
     </ScrollViewer>
