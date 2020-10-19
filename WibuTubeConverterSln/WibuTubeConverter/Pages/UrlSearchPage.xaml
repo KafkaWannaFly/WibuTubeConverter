@@ -24,7 +24,7 @@
 
             <TextBox x:Name="YoutubeUrlText"
                      PlaceholderText="Insert link from youtube here... "
-                     FontSize="20" FontStyle="Italic" Width="450" />
+                     FontSize="20" Width="450" />
             <Button x:Name="ConvertButton" FontFamily="Segoe MDL2 Assets" FontSize="20" Content="&#xE751;"
                     Grid.Column="1" Height="40"
                     HorizontalAlignment="Left" VerticalAlignment="Center" 

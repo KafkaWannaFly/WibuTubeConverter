@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using VideoLibrary;
 using Xabe.FFmpeg;
 
-namespace Core.TryYoutubeApi
+namespace Core.Services
 {
     public class YoutubeConverter
     {

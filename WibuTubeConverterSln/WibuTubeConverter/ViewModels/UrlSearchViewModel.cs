@@ -1,4 +1,4 @@
-﻿using Core.TryYoutubeApi;
+﻿using WibuTubeConverter.Services;
 using WibuTubeConverter.ViewModels.Commands;
 using System;
 using System.ComponentModel;
@@ -10,7 +10,6 @@ using VideoLibrary;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.UI.Popups;
-using Windows.ApplicationModel;
 
 namespace WibuTubeConverter.ViewModels
 {

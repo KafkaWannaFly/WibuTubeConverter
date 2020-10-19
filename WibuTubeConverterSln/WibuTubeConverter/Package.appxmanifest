@@ -12,11 +12,12 @@
     Publisher="CN=KafkaWannaFly"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="871f7e15-e49e-4b05-8ab0-95f1ea74f199" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="871f7e15-e49e-4b05-8ab0-95f1ea74f199" 
+					PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>WibuTubeConverter</DisplayName>
-    <PublisherDisplayName>KafkaWannaFly</PublisherDisplayName>
+    <DisplayName>WibuTube Converter</DisplayName>
+    <PublisherDisplayName>Kafka Wanna Fly</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -36,7 +37,7 @@
         DisplayName="WibuTube Converter"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="Small app for converting Youtube video to mp3 file"
+        Description="Small app for converting Youtube video to mp3 file include making album cover"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
@@ -53,6 +54,5 @@
     <Capability Name="internetClient" />
     <Capability Name="internetClientServer"/>
     <uap:Capability Name="removableStorage"/>
-	<rescap:Capability Name="broadFileSystemAccess" />
   </Capabilities>
 </Package>

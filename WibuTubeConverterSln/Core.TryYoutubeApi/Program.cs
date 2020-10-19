@@ -14,7 +14,7 @@ using System.Web;
 using System.Threading;
 using System.Diagnostics;
 
-namespace Core.TryYoutubeApi
+namespace Core.Services
 {
     class Program
     {
