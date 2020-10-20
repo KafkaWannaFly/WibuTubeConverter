@@ -24,6 +24,7 @@ namespace WibuTubeConverter.ViewModels
         private StorageFile mp4;
         private string mp4Path;
         private YoutubeConverter youtubeConverter = new YoutubeConverter();
+
         public Mp3ViewerViewModel()
         {
         }
@@ -32,12 +33,19 @@ namespace WibuTubeConverter.ViewModels
         {
         }
 
+        public CommandEventHandler<object> ResetDurationCmd
+        {
+            get
+            {
+                return new CommandEventHandler<object>((obj) => resetDuration());
+            }
+        }
+
         public CommandEventHandler<object> SaveAsButtonCmd
         {
             get
             {
-                return new CommandEventHandler<object>(async (obj) => await SaveButtonClicked(),
-                    () => !String.IsNullOrEmpty(mp3ViewerModel.Tittle));
+                return new CommandEventHandler<object>(async (obj) => await SaveButtonClicked());
             }
         }
 
@@ -50,15 +58,24 @@ namespace WibuTubeConverter.ViewModels
                     );
             }
         }
-
         public async Task InitAsync(FileInfo _mp4)
         {
-            mp4Path = _mp4.FullName; mp4 = await StorageFile.GetFileFromPathAsync(mp4Path);
+            try
+            {
+                mp4Path = _mp4.FullName; mp4 = await StorageFile.GetFileFromPathAsync(mp4Path);
 
-            mp3ViewerModel.Tittle = Path.GetFileNameWithoutExtension(_mp4.Name);
+                mp3ViewerModel.Tittle = Path.GetFileNameWithoutExtension(_mp4.Name);
 
-            MediaClip mediaClip = await MediaClip.CreateFromFileAsync(mp4);
-            mp3ViewerModel.Duration = mediaClip.OriginalDuration.TotalSeconds;
+                MediaClip mediaClip = await MediaClip.CreateFromFileAsync(mp4);
+                mp3ViewerModel.Duration = (int)mediaClip.OriginalDuration.TotalSeconds;
+
+                mp3ViewerModel.setBeginTime(TimeSpan.FromSeconds(0));
+                mp3ViewerModel.setEndTime(TimeSpan.FromSeconds(mp3ViewerModel.Duration));
+            }
+            catch (Exception ex)
+            {
+                await new MessageDialog(ex.Message).ShowAsync();
+            }
         }
 
         public async Task UpdateSnapshotPreview(double second)
@@ -75,7 +92,7 @@ namespace WibuTubeConverter.ViewModels
                 StorageFolder tmpFolder = App.TemporaryFolder;
                 tmpFolder = await tmpFolder.CreateFolderAsync("." + mp4.Name, CreationCollisionOption.OpenIfExists);
 
-                StorageFile imgFile = await tmpFolder.CreateFileAsync($"{second}_{imgName}", CreationCollisionOption.OpenIfExists);
+                StorageFile imgFile = await tmpFolder.CreateFileAsync(imgName, CreationCollisionOption.GenerateUniqueName);
 
                 MediaComposition mediaComposition = new MediaComposition();
                 MediaClip mediaClip = await MediaClip.CreateFromFileAsync(mp4);
@@ -105,6 +122,10 @@ namespace WibuTubeConverter.ViewModels
             MediaEncodingProfile profile = MediaEncodingProfile.CreateMp3(AudioEncodingQuality.High);
 
             MediaTranscoder mediaTranscoder = new MediaTranscoder();
+
+            mediaTranscoder.TrimStartTime = mp3ViewerModel.getBeginTime();
+            mediaTranscoder.TrimStopTime = TimeSpan.FromSeconds(mp3ViewerModel.Duration) - mp3ViewerModel.getEndTime();
+
             mediaTranscoder.HardwareAccelerationEnabled = true;
 
             PrepareTranscodeResult prepareTranscode = await mediaTranscoder.PrepareFileTranscodeAsync(src, dest, profile);
@@ -116,6 +137,11 @@ namespace WibuTubeConverter.ViewModels
             return dest;
         }
 
+        private void resetDuration()
+        {
+            mp3ViewerModel.setBeginTime(TimeSpan.FromSeconds(0));
+            mp3ViewerModel.setEndTime(TimeSpan.FromSeconds(mp3ViewerModel.Duration));
+        }
         private async Task SaveButtonClicked()
         {
             try
