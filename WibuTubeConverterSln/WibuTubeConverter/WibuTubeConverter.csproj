@@ -18,7 +18,7 @@
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
-    <PackageCertificateThumbprint>1A7AE1BECDC7F73AAD871F8524D24E050D3E8356</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>F1EEBCEA51D1F3C0744B28D5D391357035F320FC</PackageCertificateThumbprint>
     <PackageCertificateKeyFile />
     <GenerateAppInstallerFile>True</GenerateAppInstallerFile>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
@@ -144,9 +144,6 @@
     <Compile Include="Pages\Mp3ViewerPage.xaml.cs">
       <DependentUpon>Mp3ViewerPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Shell.xaml.cs">
-      <DependentUpon>Shell.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\UrlSearchPage.xaml.cs">
       <DependentUpon>UrlSearchPage.xaml</DependentUpon>
     </Compile>
@@ -248,10 +245,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\Mp3ViewerPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\Shell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

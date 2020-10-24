@@ -44,15 +44,31 @@ namespace WibuTubeConverter.ViewModels
 
         private async Task<FileInfo> getVideo(string url)
         {
+            StorageFolder folder = App.TemporaryFolder;
             try
-            {
+            { 
+                Uri uri = new Uri(url);
+                if(uri.IsFile)
+                {
+                    if(Path.GetExtension(url) != ".mp4")
+                    {
+                        throw new InvalidDataException($"{nameof(getVideo)}: Local video isn't .mp4");
+                    }
+
+                    StorageFile mp4 = await folder.CreateFileAsync(Path.GetFileName(url), CreationCollisionOption.ReplaceExisting);
+
+                    using(Stream src = new StreamReader(url).BaseStream)
+                    {
+                        using(Stream dest = await mp4.OpenStreamForWriteAsync())
+                        {
+                            await src.CopyToAsync(dest);
+                        }
+                    }
+
+                    return new FileInfo(url);
+                }
+
                 YouTubeVideo video = await this.youtubeConverter.GetVideoAsync(url);
-
-                StorageFolder folder = App.TemporaryFolder;
-
-                //StorageFolder folder = await DownloadsFolder.CreateFolderAsync(YoutubeConverter.TemporaryFolder, CreationCollisionOption.OpenIfExists);
-
-                StorageApplicationPermissions.FutureAccessList.AddOrReplace("PickedFolderToken", folder);
 
                 StorageFile storageFile = await folder.CreateFileAsync(video.FullName, CreationCollisionOption.OpenIfExists);
 

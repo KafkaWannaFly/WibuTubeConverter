@@ -73,7 +73,7 @@ namespace WibuTubeConverter.Models
             {
                 return new CommandEventHandler<object>(async (param) =>
                 {
-                    await ApplicationData.Current.ClearAsync();
+                    await ApplicationData.Current.ClearAsync(ApplicationDataLocality.Temporary);
                 });
             }
         }

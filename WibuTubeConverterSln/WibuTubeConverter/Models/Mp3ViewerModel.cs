@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using WibuTubeConverter.ViewModels.Commands;
+using Windows.ApplicationModel;
+using Windows.Storage;
 
 namespace WibuTubeConverter.Models
 {
@@ -79,7 +81,7 @@ namespace WibuTubeConverter.Models
         private double snapshot = 0f;
 
         private string imagePath = "/Assets/total-black.png";
-        private string defaultImg = "/Assets/default_thumbnail.jpg";
+        private string defaultImg = Package.Current.InstalledLocation.Path + "/Assets/default_thumbnail.jpg";
 
         public string ImagePath
         {

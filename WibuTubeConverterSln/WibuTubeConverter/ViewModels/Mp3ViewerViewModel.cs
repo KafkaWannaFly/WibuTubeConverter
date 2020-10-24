@@ -124,7 +124,7 @@ namespace WibuTubeConverter.ViewModels
             MediaTranscoder mediaTranscoder = new MediaTranscoder();
 
             mediaTranscoder.TrimStartTime = mp3ViewerModel.getBeginTime();
-            mediaTranscoder.TrimStopTime = TimeSpan.FromSeconds(mp3ViewerModel.Duration) - mp3ViewerModel.getEndTime();
+            mediaTranscoder.TrimStopTime = mp3ViewerModel.getEndTime();
 
             mediaTranscoder.HardwareAccelerationEnabled = true;
 
@@ -160,18 +160,6 @@ namespace WibuTubeConverter.ViewModels
                 StorageFile pseudoMp3 = await App.TemporaryFolder.CreateFileAsync(mp3.Name, CreationCollisionOption.ReplaceExisting);
                 pseudoMp3 = await ConvertToMp3(mp4, pseudoMp3);
 
-                await youtubeConverter.SetMp3Thumbnail(pseudoMp3.Path, mp3ViewerModel.ImagePath);
-                //setThumbnail(pseudoMp3.Path, mp3ViewerModel.ImagePath);
-
-                //MusicProperties musicProperties = await pseudoMp3.Properties.GetMusicPropertiesAsync();
-                //musicProperties.Title = mp3ViewerModel.Tittle;
-                //musicProperties.Artist = mp3ViewerModel.Performers;
-                //musicProperties.AlbumArtist = mp3ViewerModel.Performers;
-                //musicProperties.Album = mp3ViewerModel.Album;
-
-                //await musicProperties.SavePropertiesAsync();
-                //await pseudoMp3.Properties.SavePropertiesAsync();
-
                 using (mediaDetail = Tag.File.Create(pseudoMp3.Path))
                 {
                     mediaDetail.Tag.Title = mp3ViewerModel.Tittle;
@@ -179,6 +167,8 @@ namespace WibuTubeConverter.ViewModels
                     mediaDetail.Tag.Album = mp3ViewerModel.Album;
                     mediaDetail.Save();
                 }
+
+                await youtubeConverter.SetMp3Thumbnail(pseudoMp3.Path, mp3ViewerModel.ImagePath);
                 //When writing finish, copy info to chosen place
                 await pseudoMp3.CopyAndReplaceAsync(mp3);
 

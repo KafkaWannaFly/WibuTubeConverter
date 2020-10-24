@@ -199,14 +199,17 @@ namespace WibuTubeConverter.Services
                 throw new FileNotFoundException($"{nameof(SetMp3Thumbnail)}: Can't find {mp3Path}");
             }
 
-            TagLib.File mp3 = TagLib.File.Create(mp3Path);
-            mp3.Tag.Title = detail.Title;
-            mp3.Tag.Performers = detail.Performers;
-            mp3.Tag.Album = detail.Album;
+            using (TagLib.File mp3 = TagLib.File.Create(mp3Path))
+            {
+                mp3.Tag.Title = detail.Title;
+                mp3.Tag.Performers = detail.Performers;
+                mp3.Tag.Album = detail.Album;
 
-            mp3.Save();
+                mp3.Save();
+            }
+                
 
-            return new FileInfo(mp3.Name);
+            return new FileInfo(mp3Path);
         }
 
         public async Task<FileInfo> SetMp3Thumbnail(string mp3Path, string picturePath)
@@ -216,19 +219,20 @@ namespace WibuTubeConverter.Services
                 throw new FileNotFoundException($"{nameof(SetMp3Thumbnail)}: Can't find {mp3Path}");
             }
 
-            TagLib.File mp3 = TagLib.File.Create(mp3Path);
-
-            TagLib.Picture picture = new TagLib.Picture(picturePath)
+            using (TagLib.File mp3 = TagLib.File.Create(mp3Path))
             {
-                Type = TagLib.PictureType.FrontCover,
-                Description = "Cover",
-                MimeType = System.Net.Mime.MediaTypeNames.Image.Jpeg,
-            };
-            
-            mp3.Tag.Pictures = new TagLib.Picture[] { picture };
-            mp3.Save();
+                TagLib.Picture picture = new TagLib.Picture(picturePath)
+                {
+                    Type = TagLib.PictureType.FrontCover,
+                    Description = "Cover",
+                    MimeType = System.Net.Mime.MediaTypeNames.Image.Jpeg,
+                };
 
-            return new FileInfo(mp3.Name);
+                mp3.Tag.Pictures = new TagLib.Picture[] { picture };
+                mp3.Save();
+            }
+                
+            return new FileInfo(mp3Path);
         }
     }
 }

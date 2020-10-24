@@ -59,14 +59,15 @@
                            Text="Duration"/>
                 <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal"
                             VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5">
-                    <TextBox PlaceholderText="Begin" Width="100" TextAlignment="Center"
+                    <TextBox PlaceholderText="Begin" Width="120" TextAlignment="Left"
                              Text="{x:Bind mp3ViewerViewModel.mp3ViewerModel.BeginTime, Mode=TwoWay}"/>
-                    <Line Stroke="DimGray" StrokeThickness="3" X2="10" 
-                          VerticalAlignment="Center" Margin="20,0,20,0"/>
-                    <TextBox PlaceholderText="End" Width="100" TextAlignment="Center"
+                    <Line Stroke="DimGray" StrokeThickness="3" X2="5" 
+                          VerticalAlignment="Center" Margin="10,0,10,0"/>
+                    <TextBox PlaceholderText="End" Width="120" TextAlignment="Left"
                              Text="{x:Bind mp3ViewerViewModel.mp3ViewerModel.EndTime, Mode=TwoWay}"/>
+                    
                     <Button FontFamily="Segoe MDL2 Assets" Content="&#xE72C;" FontSize="10"
-                            VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="15,0,3,0" 
+                            VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,0,3,0" 
                             Foreground="White" Background="#FF6B69D6" BorderBrush="#FF7BACFF" 
                             Width="28" Height="28"
                             Command="{x:Bind mp3ViewerViewModel.ResetDurationCmd}"/>

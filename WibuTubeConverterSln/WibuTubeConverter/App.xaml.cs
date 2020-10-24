@@ -8,6 +8,7 @@ using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using TagLib;
 
 namespace WibuTubeConverter
 {
@@ -33,7 +34,6 @@ namespace WibuTubeConverter
             }
             catch (Exception e)
             {
-                File.WriteAllText("Log.txt", e.Message);
             }
             
         }
@@ -113,7 +113,7 @@ namespace WibuTubeConverter
 
         ~App()
         {
-            _ = ApplicationData.Current.ClearAsync();
+            _ = ApplicationData.Current.ClearAsync(ApplicationDataLocality.Temporary);
         }
     }
 }
