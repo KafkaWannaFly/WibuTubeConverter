@@ -1,5 +1,7 @@
 # WibuTube Converter
 
+<a href="https://github.com/tarzanchemgio/WibuTubeConverter/releases" rel="">![Release](README.assets/SplashScreen.scale-100.png)Latest Release x64</a>
+
 An UWP app that downloads YouTube video and converts into Mp3. Do you love Nightcore? Want to capture the most epic moment of the clip?
 
 Just simply paste the URL and grab your waifu!!
@@ -15,7 +17,9 @@ This app provide a few functionalities that helps your song look nice. Say goodb
 
 <p align=center> <em>Result file was opened in VLC. Groove Music sometimes doesn’t present correctly)</em> </p>
 
-<img align="center" src="README.assets/image-20201018150512526.png" alt="(How it look like when play in mobile device)">
+<img align="center" src="README.assets/Screenshot_2020-10-26-21-15-17-38.jpg" alt="(How it look like when play in mobile device)">
+
+<img align="center" src="README.assets/Screenshot_2020-10-26-21-13-00-14.jpg" alt="(How it look like when play in mobile device)">
 
 <p align=center> <em> (How it look like when play in mobile device) </em> </p>
 
