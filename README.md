@@ -1,6 +1,6 @@
 # WibuTube Converter
 
-<a href="https://github.com/tarzanchemgio/WibuTubeConverter/releases" rel="">![Release](README.assets/SplashScreen.scale-100.png)Latest Release x64</a>
+<a href="https://github.com/tarzanchemgio/WibuTubeConverter/releases" rel="">![Release](README.assets/SplashScreen.scale-100.png)Latest Release</a>
 
 An UWP app that downloads YouTube video and converts into Mp3. Do you love Nightcore? Want to capture the most epic moment of the clip?
 
