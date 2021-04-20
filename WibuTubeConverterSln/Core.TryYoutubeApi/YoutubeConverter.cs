@@ -214,7 +214,7 @@ namespace Core.Services
             mp3.Tag.Pictures = new TagLib.Picture[] { picture };
             mp3.Save();
 
-            return new FileInfo(mp3.Name);
+            return await Task.FromResult(new FileInfo(mp3.Name));
         }
 
         /// <summary>
