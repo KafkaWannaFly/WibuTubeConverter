@@ -1,0 +1,9 @@
+﻿global using BindableProps;
+global using CommunityToolkit.Diagnostics;
+global using CommunityToolkit.Maui.Markup;
+global using CommunityToolkit.Mvvm.ComponentModel;
+global using CommunityToolkit.Mvvm.Input;
+global using System;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Text;

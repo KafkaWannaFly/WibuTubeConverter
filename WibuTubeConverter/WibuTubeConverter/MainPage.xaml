@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WibuTubeConverter.MainPage"
+             xmlns:vm="clr-namespace:WibuTubeConverter.ViewModels"
+             xmlns:controls="clr-namespace:WibuTubeConverter.Controls"
+             x:DataType="vm:MainPageViewModel">
+
+    <ScrollView>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="8*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <VerticalStackLayout Grid.Column="1"
+                                 Spacing="25"
+                                 Padding="30"
+                                 VerticalOptions="Center">
+
+                <Image Source="orchestra.jpg"
+                       SemanticProperties.Description="Orchestra"
+                       MaximumHeightRequest="400"
+                       MinimumHeightRequest="50"
+                       HorizontalOptions="Center" />
+
+
+                <Grid ColumnDefinitions="*,Auto"
+                      ColumnSpacing="5">
+                    <controls:TextInput PlaceHolder="Enter YouTube url..."
+                                        Text="{Binding Url, Mode=TwoWay}" />
+                    <!--<Entry Text="{Binding Url}" />-->
+
+
+                    <Button Grid.Column="1"
+                            IsEnabled="True"
+                            Padding="12"
+                            FontFamily="Segoe MDL2 Assets"
+                            FontSize="20"
+                            Text="&#xE721;"
+                            Command="{Binding SearchVideoCommand}" />
+                </Grid>
+
+            </VerticalStackLayout>
+        </Grid>
+
+    </ScrollView>
+</ContentPage>
