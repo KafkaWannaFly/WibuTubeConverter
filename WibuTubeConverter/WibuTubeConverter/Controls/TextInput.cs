@@ -13,10 +13,6 @@ namespace WibuTubeConverter.Controls
             Content = new Border()
             {
                 BindingContext = this,
-                StrokeShape = new RoundRectangle()
-                {
-                    CornerRadius = 8,
-                },
                 Content = new Entry()
                 {
                     ClearButtonVisibility = ClearButtonVisibility.WhileEditing,

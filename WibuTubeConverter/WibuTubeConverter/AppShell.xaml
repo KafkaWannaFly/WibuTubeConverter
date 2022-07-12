@@ -6,9 +6,16 @@
     xmlns:local="clr-namespace:WibuTubeConverter"
     Shell.FlyoutBehavior="Disabled">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <ShellContent ContentTemplate="{DataTemplate local:MainPage}"
+                  Route="MainPage" />
 
+    <!--<Shell.MenuBarItems>
+        <MenuBarItem Text="File">
+            <MenuFlyoutSubItem Text="Data">
+                <MenuFlyoutItem Text="Open Cache Folder" />
+            </MenuFlyoutSubItem>
+
+            <MenuFlyoutItem Text="Exit" />
+        </MenuBarItem>
+    </Shell.MenuBarItems>-->
 </Shell>

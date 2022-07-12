@@ -20,7 +20,7 @@
                 Value="1" />
         <Setter Property="StrokeShape">
             <Setter.Value>
-                <RoundRectangle />
+                <RoundRectangle CornerRadius="8" />
             </Setter.Value>
         </Setter>
     </Style>
