@@ -15,7 +15,7 @@
 		<ApplicationTitle>WibuTubeConverter</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.wibutubeconverter</ApplicationId>
+		<ApplicationId>com.kafkawannafly.wibutubeconverter</ApplicationId>
 		<ApplicationIdGuid>D309C651-4D6E-4CAE-A003-414BC85EE1E4</ApplicationIdGuid>
 
 		<!-- Versions -->

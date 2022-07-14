@@ -11,11 +11,5 @@ public partial class MainPage : ContentPage
         InitializeComponent();
         BindingContext = viewModel;
     }
-
-    private void Button_Clicked(object sender, EventArgs e)
-    {
-        var popUp = new LoadingPopUp();
-        this.ShowPopup(popUp);
-    }
 }
 
