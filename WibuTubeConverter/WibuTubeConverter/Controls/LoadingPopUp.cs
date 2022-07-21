@@ -39,7 +39,7 @@ namespace WibuTubeConverter.Controls
                             Text = "Stop",
                             CornerRadius = 8,
                             Margin = new(4),
-                            Command = new Command(() => OnClosed(false, false)),
+                            Command = new Command(() => Close()),
                         }.AlignSelf(FlexAlignSelf.Center)
                     }
                 }

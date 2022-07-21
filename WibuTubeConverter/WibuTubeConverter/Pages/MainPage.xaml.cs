@@ -1,8 +1,6 @@
-﻿using CommunityToolkit.Maui.Views;
-using WibuTubeConverter.Controls;
-using WibuTubeConverter.ViewModels;
+﻿using WibuTubeConverter.ViewModels;
 
-namespace WibuTubeConverter;
+namespace WibuTubeConverter.Pages;
 
 public partial class MainPage : ContentPage
 {

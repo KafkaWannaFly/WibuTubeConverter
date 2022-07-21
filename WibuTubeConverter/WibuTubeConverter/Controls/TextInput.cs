@@ -20,7 +20,7 @@ namespace WibuTubeConverter.Controls
                 }
                 .Bind(Entry.TextProperty, nameof(Text))
                 .Bind(Entry.PlaceholderProperty, nameof(PlaceHolder))
-            };
+            }.Bind(StyleProperty, nameof(Style));
         }
     }
 }

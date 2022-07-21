@@ -1,44 +1,61 @@
 ﻿using CommunityToolkit.Maui.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WibuTubeConverter.Controls;
+using WibuTubeConverter.Pages;
 
 namespace WibuTubeConverter.ViewModels
 {
     public partial class MainPageViewModel : ObservableObject
     {
         [ObservableProperty]
-        private string url;
+        string url;
 
-        private readonly WibuTube.WibuTubeConverter wibuTubeConverter;
+        [ObservableProperty]
+        bool isValidUrl;
 
-        public MainPageViewModel(WibuTube.WibuTubeConverter wibuTubeConverter)
+        readonly WibuTube wibuTube;
+        readonly IFileSystem fileSystem;
+
+        public MainPageViewModel(WibuTube wibuTube, IFileSystem fileSystem)
         {
-            this.wibuTubeConverter = wibuTubeConverter;
+            this.wibuTube = wibuTube;
+            this.fileSystem = fileSystem;
+
+            Url = "";
+            isValidUrl = false;
         }
 
-        [RelayCommand]
+
+        [RelayCommand(CanExecute = nameof(IsValidUrl))]
         async Task SearchVideo(ContentPage mainPage)
         {
             var popUp = new LoadingPopUp();
 
             var popUpTask = mainPage.ShowPopupAsync(popUp);
-            var myTask = myExampleTask();
-            var finishedTask = await Task.WhenAny(popUpTask, myTask);
+            var downloadTask = DownloadVideoAsync();
+            var finishedTask = await Task.WhenAny(popUpTask, downloadTask);
 
-            if (finishedTask == myTask)
+            if (finishedTask == downloadTask)
             {
+                var videoFileInfo = downloadTask.Result;
+
+
+                await Shell.Current.GoToAsync(nameof(ConvertPage), new Dictionary<string, object>
+                {
+                    { nameof(videoFileInfo), videoFileInfo }
+                });
                 popUp.Close();
             }
         }
 
-        async Task<string> myExampleTask()
+        async Task<FileInfo> DownloadVideoAsync()
         {
-            await Task.Delay(3000);
-            return "Hello";
+            if (Uri.IsWellFormedUriString(Url, UriKind.Absolute))
+            {
+                var videoFileInfo = await wibuTube.DownloadVideoAsync(Url, fileSystem.CacheDirectory);
+                return videoFileInfo;
+            }
+
+            return null;
         }
     }
 }

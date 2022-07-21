@@ -1,11 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="WibuTubeConverter.MainPage"
+             x:Class="WibuTubeConverter.Pages.MainPage"
              x:Name="mainPage"
              xmlns:vm="clr-namespace:WibuTubeConverter.ViewModels"
              xmlns:controls="clr-namespace:WibuTubeConverter.Controls"
-             x:DataType="vm:MainPageViewModel">
+             x:DataType="vm:MainPageViewModel"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+
+    <ContentPage.Resources>
+        <Style x:Key="InvalidStyle"
+               TargetType="Border">
+            <Setter Property="Stroke"
+                    Value="Red" />
+        </Style>
+
+        <Style x:Key="ValidStyle"
+               TargetType="Border">
+            <Setter Property="Stroke"
+                    Value="{StaticResource Primary}" />
+        </Style>
+    </ContentPage.Resources>
 
     <ScrollView>
         <Grid>
@@ -30,17 +45,27 @@
                 <Grid ColumnDefinitions="*,Auto"
                       ColumnSpacing="5">
                     <controls:TextInput PlaceHolder="Enter YouTube URL..."
-                                        Text="{Binding Url, Mode=TwoWay}" />
+                                        Text="{Binding Url, Mode=TwoWay}">
+                        <controls:TextInput.Behaviors>
+                            <toolkit:UriValidationBehavior x:Name="validator"
+                                                           Flags="ValidateOnValueChanged"
+                                                           UriKind="Absolute"
+                                                           Value="{Binding Url}"
+                                                           IsValid="{Binding IsValidUrl}"
+                                                           ValidStyle="{StaticResource ValidStyle}"
+                                                           InvalidStyle="{StaticResource InvalidStyle}" />
+                        </controls:TextInput.Behaviors>
+                    </controls:TextInput>
 
 
                     <Button Grid.Column="1"
-                            IsEnabled="True"
                             Padding="12"
                             FontFamily="Segoe MDL2 Assets"
                             FontSize="20"
                             Text="&#xE721;"
                             Command="{Binding SearchVideoCommand}"
-                            CommandParameter="{x:Reference mainPage}"/>
+                            CommandParameter="{x:Reference mainPage}"
+                            IsEnabled="{Binding IsValidUrl}" />
                 </Grid>
 
             </VerticalStackLayout>

@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using WibuTubeConverter.Pages;
 using WibuTubeConverter.ViewModels;
 
 namespace WibuTubeConverter;
@@ -21,7 +22,9 @@ public static class MauiProgram
 		var service = builder.Services;
 		service.AddSingleton<MainPage>()
 			.AddSingleton<MainPageViewModel>()
-			.AddSingleton<WibuTube.WibuTubeConverter>()
+			.AddTransient<ConvertPage>()
+			.AddTransient<ConvertPageViewModel>()
+			.AddSingleton<WibuTube>()
 			.AddSingleton(FileSystem.Current);
 
 		return builder.Build();
