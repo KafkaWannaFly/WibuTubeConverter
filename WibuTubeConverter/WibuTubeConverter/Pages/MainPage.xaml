@@ -22,16 +22,9 @@
         </Style>
     </ContentPage.Resources>
 
-    <ScrollView>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="8*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <VerticalStackLayout Grid.Column="1"
-                                 Spacing="25"
+    <controls:ContainerView>
+        <x:Arguments>
+            <VerticalStackLayout Spacing="25"
                                  Padding="30"
                                  VerticalOptions="Center">
 
@@ -67,9 +60,7 @@
                             CommandParameter="{x:Reference mainPage}"
                             IsEnabled="{Binding IsValidUrl}" />
                 </Grid>
-
             </VerticalStackLayout>
-        </Grid>
-
-    </ScrollView>
+        </x:Arguments>
+    </controls:ContainerView>
 </ContentPage>
