@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WibuTubeConverter.Pages.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:WibuTubeConverter.Controls"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:WibuTubeConverter.ViewModels"
+    x:Name="mainPage"
+    x:DataType="vm:MainPageViewModel">
+
+    <ContentPage.Resources>
+        <Style x:Key="InvalidStyle" TargetType="Border">
+            <Setter Property="Stroke" Value="Red" />
+        </Style>
+
+        <Style x:Key="ValidStyle" TargetType="Border">
+            <Setter Property="Stroke" Value="{StaticResource Primary}" />
+        </Style>
+    </ContentPage.Resources>
+
+    <controls:ContainerView>
+        <x:Arguments>
+            <VerticalStackLayout
+                Padding="30"
+                Spacing="25"
+                VerticalOptions="Center">
+
+                <Image
+                    HorizontalOptions="Center"
+                    MaximumHeightRequest="400"
+                    MinimumHeightRequest="50"
+                    SemanticProperties.Description="Orchestra"
+                    Source="orchestra.png" />
+
+
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="5">
+                    <controls:TextInput PlaceHolder="Enter the YouTube URL..." Text="{Binding Url, Mode=TwoWay}">
+                        <controls:TextInput.Behaviors>
+                            <toolkit:UriValidationBehavior
+                                x:Name="validator"
+                                Flags="ValidateOnValueChanged"
+                                InvalidStyle="{StaticResource InvalidStyle}"
+                                IsValid="{Binding IsValidUrl}"
+                                UriKind="Absolute"
+                                ValidStyle="{StaticResource ValidStyle}"
+                                Value="{Binding Url}" />
+                        </controls:TextInput.Behaviors>
+                    </controls:TextInput>
+
+
+                    <Button
+                        Grid.Column="1"
+                        Padding="12"
+                        Command="{Binding SearchVideoCommand}"
+                        CommandParameter="{x:Reference mainPage}"
+                        FontFamily="Segoe MDL2 Assets"
+                        FontSize="20"
+                        IsEnabled="{Binding IsValidUrl}"
+                        Text="&#xE721;" />
+                </Grid>
+            </VerticalStackLayout>
+        </x:Arguments>
+    </controls:ContainerView>
+</ContentPage>

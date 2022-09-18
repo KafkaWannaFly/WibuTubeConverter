@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WibuTubeConverter", "WibuTubeConverter\WibuTubeConverter.csproj", "{956284FD-1682-4B4E-888A-8EF663B0CB92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WibuTubeConverter", "WibuTubeConverter.csproj", "{AE9CED20-9406-48FE-BE29-612A630ED586}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,12 +11,12 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{956284FD-1682-4B4E-888A-8EF663B0CB92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{956284FD-1682-4B4E-888A-8EF663B0CB92}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{956284FD-1682-4B4E-888A-8EF663B0CB92}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{956284FD-1682-4B4E-888A-8EF663B0CB92}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{956284FD-1682-4B4E-888A-8EF663B0CB92}.Release|Any CPU.Build.0 = Release|Any CPU
-		{956284FD-1682-4B4E-888A-8EF663B0CB92}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{AE9CED20-9406-48FE-BE29-612A630ED586}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE9CED20-9406-48FE-BE29-612A630ED586}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE9CED20-9406-48FE-BE29-612A630ED586}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{AE9CED20-9406-48FE-BE29-612A630ED586}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE9CED20-9406-48FE-BE29-612A630ED586}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE9CED20-9406-48FE-BE29-612A630ED586}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
