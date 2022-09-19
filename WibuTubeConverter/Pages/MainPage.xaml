@@ -17,13 +17,17 @@
         <Style x:Key="ValidStyle" TargetType="Border">
             <Setter Property="Stroke" Value="{StaticResource Primary}" />
         </Style>
+
+        <ResourceDictionary>
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
     </ContentPage.Resources>
 
     <controls:ContainerView>
         <x:Arguments>
             <VerticalStackLayout
                 Padding="30"
-                Spacing="25"
+                Spacing="20"
                 VerticalOptions="Center">
 
                 <Image
@@ -59,6 +63,8 @@
                         IsEnabled="{Binding IsValidUrl}"
                         Text="&#xE721;" />
                 </Grid>
+
+                <controls:ErrorMessage IsVisible="{Binding IsValidUrl, Converter={StaticResource InvertedBoolConverter}}" Text="Empty or Invalid URL!" />
             </VerticalStackLayout>
         </x:Arguments>
     </controls:ContainerView>
