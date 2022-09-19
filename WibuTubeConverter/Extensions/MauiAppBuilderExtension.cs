@@ -5,12 +5,14 @@ namespace WibuTubeConverter.Extensions
 {
     internal static class MauiAppBuilderExtension
     {
-        public static MauiAppBuilder RegisterViewModels(this MauiAppBuilder mauiAppBuilder)
+        public static MauiAppBuilder RegisterServices(this MauiAppBuilder mauiAppBuilder)
         {
             var service = mauiAppBuilder.Services;
 
             service.AddSingleton<MainPage>()
                 .AddSingleton<MainPageViewModel>()
+                .AddTransient<ConvertPage>()
+                .AddTransient<ConvertViewModel>()
                 .AddSingleton<WibuTube>()
                 .AddSingleton(FileSystem.Current);
 

@@ -1,11 +1,9 @@
-﻿using CommunityToolkit.Maui.Views;
-using Microsoft.Maui.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Views;
+using Microsoft.UI.Xaml.Controls.Primitives;
+using WibuTubeConverter.Constants;
 using WibuTubeConverter.Controls;
+using WibuTubeConverter.Pages;
 
 namespace WibuTubeConverter.ViewModels
 {
@@ -17,7 +15,7 @@ namespace WibuTubeConverter.ViewModels
         [ObservableProperty]
         bool isValidUrl;
 
-        readonly WibuTube wibuTube;
+        readonly WibuTube wibuTube; // TODO: Re-implement this shit
         readonly IFileSystem fileSystem;
 
         public MainPageViewModel(WibuTube wibuTube, IFileSystem fileSystem)
@@ -35,28 +33,38 @@ namespace WibuTubeConverter.ViewModels
         {
             var popUp = new LoadingPopUp();
 
-            var popUpTask = mainPage.ShowPopupAsync(popUp);
-            //var downloadTask = DownloadVideoAsync();
-            //var finishedTask = await Task.WhenAny(popUpTask, downloadTask);
+            try
+            {
+                var popUpTask = mainPage.ShowPopupAsync(popUp);
+                var downloadTask = DownloadVideoAsync();
+                var finishedTask = await Task.WhenAny(popUpTask, downloadTask);
 
-            //if (finishedTask == downloadTask)
-            //{
-            //    var videoFileInfo = downloadTask.Result;
+                if (finishedTask == downloadTask)
+                {
+                    var videoFileInfo = downloadTask.Result;
 
 
-            //    await Shell.Current.GoToAsync(nameof(ConvertPage), new Dictionary<string, object>
-            //    {
-            //        { nameof(videoFileInfo), videoFileInfo }
-            //    });
-            //    popUp.Close();
-            //}
+                    await Shell.Current.GoToAsync(nameof(ConvertPage), new Dictionary<string, object>
+                    {
+                        { NavigationParamConstants.VideoFileInfo, videoFileInfo }
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+            }
+            finally
+            {
+                popUp.Close();
+            }
         }
 
         async Task<FileInfo> DownloadVideoAsync()
         {
             if (Uri.IsWellFormedUriString(Url, UriKind.Absolute))
             {
-                var videoFileInfo = await wibuTube.DownloadVideoAsync(Url, fileSystem.CacheDirectory);
+                var videoFileInfo = await wibuTube.DownloadVideoAsync(Url, $"{fileSystem.CacheDirectory}/");
                 return videoFileInfo;
             }
 
