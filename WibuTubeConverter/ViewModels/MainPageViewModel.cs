@@ -1,6 +1,4 @@
-﻿using CommunityToolkit.Maui.Alerts;
-using CommunityToolkit.Maui.Views;
-using Microsoft.UI.Xaml.Controls.Primitives;
+﻿using CommunityToolkit.Maui.Views;
 using WibuTubeConverter.Constants;
 using WibuTubeConverter.Controls;
 using WibuTubeConverter.Pages;

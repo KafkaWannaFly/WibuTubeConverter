@@ -3,8 +3,8 @@
     [AllBindableProps]
     public partial class TextInput : ContentView
     {
-        string text;
-        string placeHolder;
+        private string _text;
+        private string _placeHolder;
 
         public TextInput()
         {
@@ -12,12 +12,12 @@
             {
                 BindingContext = this,
                 Content = new Entry()
-                {
-                    ClearButtonVisibility = ClearButtonVisibility.WhileEditing,
-                    VerticalTextAlignment = TextAlignment.Center,
-                }
-                .Bind(Entry.TextProperty, nameof(Text))
-                .Bind(Entry.PlaceholderProperty, nameof(PlaceHolder))
+                    {
+                        ClearButtonVisibility = ClearButtonVisibility.WhileEditing,
+                        VerticalTextAlignment = TextAlignment.Center,
+                    }
+                    .Bind(Entry.TextProperty, nameof(Text))
+                    .Bind(Entry.PlaceholderProperty, nameof(PlaceHolder))
             }.Bind(StyleProperty, nameof(Style));
         }
     }

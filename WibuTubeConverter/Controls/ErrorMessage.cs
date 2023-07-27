@@ -1,11 +1,12 @@
-﻿using static CommunityToolkit.Maui.Markup.GridRowsColumns;
+﻿#pragma warning disable
+
+using static CommunityToolkit.Maui.Markup.GridRowsColumns;
 
 namespace WibuTubeConverter.Controls
 {
-    [AllBindableProps]
     public partial class ErrorMessage : ContentView
     {
-        string text;
+        [BindableProp] private string text;
 
         public ErrorMessage()
         {
