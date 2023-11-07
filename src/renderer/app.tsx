@@ -24,7 +24,14 @@ createRoot(document.getElementById("root")).render(
                                 <Header style={{ display: "flex", alignItems: "center" }}>
                                     <Navbar />
                                 </Header>
-                                <Content style={{ padding: "2rem" }}>
+                                <Content
+                                    style={{
+                                        padding: "4rem",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                    }}
+                                >
                                     <Outlet />
                                 </Content>
                             </Layout>

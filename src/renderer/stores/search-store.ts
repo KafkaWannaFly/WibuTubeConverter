@@ -1,7 +1,8 @@
 import { action, makeObservable, observable } from "mobx";
 
 export class SearchStore {
-    @observable url = "";
+    @observable
+    url = "";
 
     constructor() {
         makeObservable(this);
