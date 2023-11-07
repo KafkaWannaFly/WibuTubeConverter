@@ -7,8 +7,9 @@ import { SearchPage } from "./pages/search-page";
 import { SongDetail } from "./pages/song-detail";
 import { Navbar } from "./components/navbar";
 import { SearchStore } from "./stores/search-store";
+import { NavigationStore } from "./stores/navigation-store";
 
-const contextValue = { searchStore: new SearchStore() };
+const contextValue = { searchStore: new SearchStore(), navigationStore: new NavigationStore() };
 export const StoreContext = createContext(contextValue);
 
 createRoot(document.getElementById("root")).render(
@@ -20,7 +21,7 @@ createRoot(document.getElementById("root")).render(
                     element: (
                         <StoreContext.Provider value={contextValue}>
                             <Layout style={{ background: "transparent" }}>
-                                <Header style={{}}>
+                                <Header style={{ display: "flex", alignItems: "center" }}>
                                     <Navbar />
                                 </Header>
                                 <Content style={{ padding: "2rem" }}>

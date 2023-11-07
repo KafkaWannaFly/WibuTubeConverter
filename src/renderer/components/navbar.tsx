@@ -1,29 +1,31 @@
 import { blue } from "@ant-design/colors";
 import { LeftOutlined } from "@ant-design/icons";
 import { Button } from "antd";
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { StoreContext } from "../app";
+import { Observer } from "mobx-react";
 
 export const Navbar = () => {
-    const [displayMode, setDisplayMode] = useState("block");
-    const location = useLocation();
-
-    useEffect(() => {
-        if (location.pathname === "/") {
-            setDisplayMode("none");
-        } else {
-            setDisplayMode("block");
-        }
-    }, [location]);
+    const naviagte = useNavigate();
+    const { navigationStore } = useContext(StoreContext);
 
     return (
         <div>
-            <Button
-                type="text"
-                size="large"
-                icon={<LeftOutlined style={{ color: blue.primary }} />}
-                style={{ display: displayMode }}
-            />
+            <Observer>
+                {() => (
+                    <Button
+                        type="text"
+                        size="large"
+                        icon={<LeftOutlined style={{ color: blue.primary }} />}
+                        style={{ display: navigationStore.history.length === 0 ? "none" : "block" }}
+                        onClick={() => {
+                            navigationStore.popHistory();
+                            naviagte(-1);
+                        }}
+                    />
+                )}
+            </Observer>
         </div>
     );
 };

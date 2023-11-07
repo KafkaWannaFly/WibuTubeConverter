@@ -8,11 +8,7 @@ export class SearchStore {
     }
 
     @action
-    set setUrl(url: string) {
+    setUrl(url: string) {
         this.url = url;
-    }
-
-    get getUrl() {
-        return this.url;
     }
 }

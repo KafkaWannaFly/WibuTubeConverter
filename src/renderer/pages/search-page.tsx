@@ -1,9 +1,10 @@
 import { Form, Image } from "antd";
 import { useForm } from "antd/es/form/Form";
 import Search from "antd/es/input/Search";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { utils } from "../../commons/utils";
+import { StoreContext } from "../app";
 
 export const SearchPage = () => {
     const [url, setUrl] = useState("");
@@ -11,6 +12,8 @@ export const SearchPage = () => {
     const [form] = useForm();
 
     const navigate = useNavigate();
+
+    const { navigationStore } = useContext(StoreContext);
 
     return (
         <>
@@ -41,6 +44,7 @@ export const SearchPage = () => {
                                 const fields = await form.validateFields();
                                 const url = fields.url as string;
 
+                                navigationStore.addHistory(url);
                                 navigate(`/detail`, { state: { url } });
                             } catch (error) {
                                 console.error(error);
