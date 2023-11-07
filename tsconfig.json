@@ -11,7 +11,10 @@
     "outDir": "dist",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "jsx": "react"
+    "jsx": "react",
+    "experimentalDecorators": true
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }
