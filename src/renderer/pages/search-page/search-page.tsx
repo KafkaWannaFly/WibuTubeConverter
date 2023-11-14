@@ -4,8 +4,8 @@ import Search from "antd/es/input/Search";
 import { Observer } from "mobx-react";
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { utils } from "../../commons/utils";
-import { StoreContext } from "../app";
+import { utils } from "../../../commons/utils";
+import { StoreContext } from "../../app";
 
 export const SearchPage = () => {
     const [form] = useForm();
@@ -15,10 +15,6 @@ export const SearchPage = () => {
     const { navigationStore, searchStore } = useContext(StoreContext);
 
     const handleSearch = async () => {
-        const ipcRenderer = window.api.ipcRenderer;
-        const r = await ipcRenderer.invoke("get-song", { url: searchStore.url });
-        console.log(r);
-
         try {
             const fields = await form.validateFields();
             const url = fields.url as string;
