@@ -12,14 +12,13 @@ export const SearchPage = () => {
 
     const navigate = useNavigate();
 
-    const { navigationStore, searchStore } = useContext(StoreContext);
+    const { searchStore } = useContext(StoreContext);
 
     const handleSearch = async () => {
         try {
             const fields = await form.validateFields();
             const url = fields.url as string;
 
-            navigationStore.addHistory(url);
             navigate(`/detail`, { state: { url } });
         } catch (error) {
             console.error(error);

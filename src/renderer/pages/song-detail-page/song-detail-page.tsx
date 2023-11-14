@@ -12,14 +12,14 @@ export const SongDetailPage = () => {
     const { state } = useLocation();
     const url = state.url as string;
 
-    const { songStore, navigationStore } = useContext(StoreContext);
+    const { songStore } = useContext(StoreContext);
 
     const { loading, data, error } = useRequest(() => songStore.getVideoInfo(url));
 
     const modelFooter = [
-        <Tooltip title="It would stop without second confirm 😉">
+        <Tooltip key={0} title="It would stop without second confirm 😉">
             <Button danger onClick={() => onCancel()}>
-                Cancel
+                Back
             </Button>
         </Tooltip>,
     ];
@@ -27,7 +27,6 @@ export const SongDetailPage = () => {
     const onCancel = () => {
         setIsOpen(false);
         navigate(`/`);
-        navigationStore.popHistory();
     };
 
     return (

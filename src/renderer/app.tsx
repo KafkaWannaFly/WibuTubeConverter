@@ -7,12 +7,10 @@ import { SearchPage } from "./pages/search-page/search-page";
 import { SongDetailPage } from "./pages/song-detail-page/song-detail-page";
 import { Navbar } from "./components/navbar";
 import { SearchStore } from "./stores/search-store";
-import { NavigationStore } from "./stores/navigation-store";
 import { SongStore } from "./stores/song-store";
 
 const contextValue = {
     searchStore: new SearchStore(),
-    navigationStore: new NavigationStore(),
     songStore: new SongStore(window.api.ipcRenderer),
 };
 export const StoreContext = createContext(contextValue);
