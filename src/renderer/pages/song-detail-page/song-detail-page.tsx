@@ -1,5 +1,5 @@
 import { useRequest } from "ahooks";
-import { Button, Modal, Skeleton, Tooltip } from "antd";
+import { Button, Modal, Result, Skeleton, Tooltip } from "antd";
 import React, { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { StoreContext } from "../../app";
@@ -17,7 +17,7 @@ export const SongDetailPage = () => {
     const { loading, data, error } = useRequest(() => songStore.getVideoInfo(url));
 
     const modelFooter = [
-        <Tooltip key={0} title="It would stop without second confirm 😉">
+        <Tooltip key={0} title="It would stop without second confirmation 😉">
             <Button danger onClick={() => onCancel()}>
                 Back
             </Button>
@@ -48,7 +48,7 @@ export const SongDetailPage = () => {
                         performer={data.videoDetails.author.name}
                     />
                 )}
-                {error && JSON.stringify(error, null, 2)}
+                {!loading && error && <Result status="error" subTitle={error.message} />}
             </Modal>
         </div>
     );
