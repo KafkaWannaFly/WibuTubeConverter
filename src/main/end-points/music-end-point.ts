@@ -13,8 +13,10 @@ export const musicEndPoint = (ipcMain: Electron.IpcMain) => {
         const info = arg.info;
 
         let startTime = 0;
+        const savedDir = "./video";
+        fs.mkdirSync(savedDir, { recursive: true });
         ytdl.downloadFromInfo(info, { quality: "highestaudio" })
-            .pipe(fs.createWriteStream(`./video/${info.videoDetails.title}.mp4`))
+            .pipe(fs.createWriteStream(`${savedDir}/${info.videoDetails.title}.mp4`))
             .on("response", () => {
                 startTime = Date.now();
             })

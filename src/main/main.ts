@@ -1,5 +1,4 @@
 import { app, BrowserWindow, ipcMain } from "electron";
-import installExtension, { MOBX_DEVTOOLS, REACT_DEVELOPER_TOOLS } from "electron-devtools-installer";
 import path from "path";
 import { musicEndPoint } from "./end-points/music-end-point";
 

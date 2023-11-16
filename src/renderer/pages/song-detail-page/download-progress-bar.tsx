@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { StoreContext } from "../../app";
 import { videoInfo } from "ytdl-core";
 import { Progress, Typography } from "antd";
+import { Observer } from "mobx-react";
 
 interface DownloadProgressBarProps {
     info: videoInfo;
@@ -15,8 +16,14 @@ export const DownloadProgressBar = (props: DownloadProgressBarProps) => {
 
     return (
         <div>
-            <Progress percent={downloadPercentage * 100} status={error ? "exception" : "normal"} />
-            {error && <Typography.Text type="danger">{error.message}</Typography.Text>}
+            <Observer>
+                {() => (
+                    <>
+                        <Progress percent={downloadPercentage * 100} status={error ? "exception" : "normal"} />
+                        {error && <Typography.Text type="danger">{error.message}</Typography.Text>}
+                    </>
+                )}
+            </Observer>
         </div>
     );
 };
