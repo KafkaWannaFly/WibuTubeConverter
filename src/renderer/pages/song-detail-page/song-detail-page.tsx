@@ -4,6 +4,7 @@ import React, { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { StoreContext } from "../../app";
 import { SongBasicInfo } from "./song-basic-info";
+import { DownloadProgressBar } from "./download-progress-bar";
 
 export const SongDetailPage = () => {
     const [isOpen, setIsOpen] = useState(true);
@@ -17,7 +18,7 @@ export const SongDetailPage = () => {
     const { loading, data, error } = useRequest(() => songStore.getVideoInfo(url));
 
     const modelFooter = [
-        <Tooltip key={0} title="It would stop without second confirmation 😉">
+        <Tooltip key={0} title="It would stop without any second confirmation 😉">
             <Button danger onClick={() => onCancel()}>
                 Back
             </Button>
@@ -48,6 +49,7 @@ export const SongDetailPage = () => {
                         performer={data.videoDetails.author.name}
                     />
                 )}
+                {!loading && data && <DownloadProgressBar info={data} />}
                 {!loading && error && <Result status="error" subTitle={error.message} />}
             </Modal>
         </div>
