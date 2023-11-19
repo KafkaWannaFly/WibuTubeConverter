@@ -44,12 +44,12 @@ export const SongDetailPage = () => {
                 <Skeleton active loading={loading} />
                 {!loading && data && (
                     <SongBasicInfo
-                        image={data.videoDetails.thumbnails[0].url}
+                        image={data.videoDetails.thumbnails.pop()?.url}
                         name={data.videoDetails.title}
                         performer={data.videoDetails.author.name}
                     />
                 )}
-                {!loading && data && <DownloadProgressBar info={data} />}
+                {/* {!loading && data && <DownloadProgressBar info={data} />} */}
                 {!loading && error && <Result status="error" subTitle={error.message} />}
             </Modal>
         </div>

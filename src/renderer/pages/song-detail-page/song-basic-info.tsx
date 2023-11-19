@@ -12,7 +12,7 @@ export const SongBasicInfo = (props: SongBasicInfoProps) => {
     const { image, name, performer } = props;
     return (
         <div>
-            <Image src={image} fallback="../../assests/logo.png" preview={false} width="100%" />
+            <Image src={image} fallback="../../assests/logo.png" preview={false} placeholder width="100%" />
             <Title level={4}>{name}</Title>
             <Typography.Text>{performer}</Typography.Text>
         </div>
