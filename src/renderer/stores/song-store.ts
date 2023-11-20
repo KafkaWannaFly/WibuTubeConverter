@@ -65,7 +65,7 @@ export class SongStore {
         });
 
         this.on("download-song/complete", (_, arg: DownloadProcessDetail) => {
-            this.setDownloadPercentage(arg.percentage);
+            this.setDownloadPercentage(1);
             this.setEstimatedDownloadTime(arg.estimatedDownloadTime);
             this.isDownloading = false;
         });
