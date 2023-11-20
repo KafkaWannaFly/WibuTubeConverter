@@ -1,45 +1,61 @@
-import ytdl from "ytdl-core";
+import Logger from "electron-log";
 import fs from "fs";
-import { DownloadRequest } from "../../commons/dto/download-request";
+import ytdl from "ytdl-core";
 import { DownloadProcessDetail } from "../../commons/dto/download-process-detail";
+import { DownloadRequest } from "../../commons/dto/download-request";
 
 export const musicEndPoint = (ipcMain: Electron.IpcMain) => {
     ipcMain.handle("get-song-info", async (_, arg: DownloadRequest) => {
         const url = arg.url;
+        Logger.info(`Getting info from ${url}`);
         return await ytdl.getInfo(url);
     });
 
-    ipcMain.handle("download-song", async (_, arg: DownloadRequest) => {
+    ipcMain.handle("download-song", async (e, arg: DownloadRequest) => {
         const info = arg.info;
+        Logger.info(`Downloading ${info.videoDetails.title}`);
 
         let startTime = 0;
         const savedDir = "./downloads";
         fs.mkdirSync(savedDir, { recursive: true });
-        ytdl.downloadFromInfo(info, { quality: "highest" })
-            .pipe(fs.createWriteStream(`${savedDir}/${info.videoDetails.title}.mp4`))
-            .on("response", () => {
-                startTime = Date.now();
-            })
-            .on("progress", (_, downloaded: number, total: number) => {
-                const percentage = downloaded / total;
-                const downloadedMinutes = (Date.now() - startTime) / 1000 / 60;
-                const estimatedDownloadTime = downloadedMinutes / percentage - downloadedMinutes;
-                console.log(`${(percentage * 100).toFixed(2)}% downloaded`);
-                console.log(`Estimated download time: ${estimatedDownloadTime.toFixed(2)} minutes`);
+        const downloadStream = ytdl.downloadFromInfo(info, { quality: "highest" });
 
-                ipcMain.emit("download-song/process", {
-                    percentage: percentage,
-                    estimatedDownloadTime: estimatedDownloadTime,
-                    title: info.videoDetails.title,
-                } as DownloadProcessDetail);
-            })
-            .on("end", () => {
-                console.log("Download complete!");
-                ipcMain.emit("download-song/complete", {
-                    title: info.videoDetails.title,
-                    percentage: 1,
-                    estimatedDownloadTime: 0,
-                } as DownloadProcessDetail);
-            });
+        const eventEmitter = e.sender;
+
+        downloadStream.pipe(fs.createWriteStream(`${savedDir}/${info.videoDetails.title}.mp4`));
+
+        downloadStream.once("response", () => {
+            startTime = Date.now();
+        });
+
+        downloadStream.on("progress", (_, downloaded: number, total: number) => {
+            const percentage = downloaded / total;
+            const downloadedMinutes = (Date.now() - startTime) / 1000 / 60;
+            const estimatedDownloadTime = downloadedMinutes / percentage - downloadedMinutes;
+
+            eventEmitter.send("download-song/process", {
+                percentage: percentage,
+                estimatedDownloadTime: estimatedDownloadTime,
+                title: info.videoDetails.title,
+            } as DownloadProcessDetail);
+        });
+
+        downloadStream.on("end", () => {
+            Logger.info(`Download complete: ${info.videoDetails.title}`);
+            eventEmitter.send("download-song/complete", {
+                title: info.videoDetails.title,
+                percentage: 1,
+                estimatedDownloadTime: 0,
+            } as DownloadProcessDetail);
+        });
+
+        downloadStream.on("error", (err) => {
+            Logger.error(err);
+        });
+
+        ipcMain.on("download-song/cancel", () => {
+            Logger.info("Download canceled!");
+            downloadStream.destroy();
+        });
     });
 };

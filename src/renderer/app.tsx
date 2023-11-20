@@ -11,7 +11,10 @@ import { SongStore } from "./stores/song-store";
 
 const contextValue = {
     searchStore: new SearchStore(),
-    songStore: new SongStore(window.api.ipcRenderer),
+    songStore: new SongStore({
+        ipcRenderer: window.api.ipcRenderer,
+        on: window.api.on,
+    }),
 };
 export const StoreContext = createContext(contextValue);
 

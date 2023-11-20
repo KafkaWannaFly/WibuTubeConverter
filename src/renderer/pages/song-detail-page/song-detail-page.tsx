@@ -26,6 +26,7 @@ export const SongDetailPage = () => {
     ];
 
     const onCancel = () => {
+        songStore.cancelDownload();
         setIsOpen(false);
         navigate(`/`);
     };
@@ -49,7 +50,7 @@ export const SongDetailPage = () => {
                         performer={data.videoDetails.author.name}
                     />
                 )}
-                {/* {!loading && data && <DownloadProgressBar info={data} />} */}
+                {!loading && data && <DownloadProgressBar info={data} />}
                 {!loading && error && <Result status="error" subTitle={error.message} />}
             </Modal>
         </div>

@@ -12,18 +12,21 @@ interface DownloadProgressBarProps {
 export const DownloadProgressBar = (props: DownloadProgressBarProps) => {
     const { songStore } = useContext(StoreContext);
     const { downloadPercentage } = songStore;
-    const { error } = useRequest(() => songStore.downloadSongFromInfo(props.info));
+    const { error, loading } = useRequest(() => songStore.downloadSongFromInfo(props.info));
 
     return (
         <div>
             <Observer>
                 {() => (
                     <>
-                        <Progress percent={downloadPercentage * 100} status={error ? "exception" : "normal"} />
-                        {error && <Typography.Text type="danger">{error.message}</Typography.Text>}
+                        <Progress
+                            percent={downloadPercentage * 100}
+                            status={error ? "exception" : loading ? "normal" : "success"}
+                        />
                     </>
                 )}
             </Observer>
+            {error && <Typography.Text type="danger">{error.message}</Typography.Text>}
         </div>
     );
 };

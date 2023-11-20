@@ -1,6 +1,7 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
 import { musicEndPoint } from "./end-points/music-end-point";
+import log from "electron-log";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -56,5 +57,6 @@ app.on("activate", () => {
 });
 
 app.whenReady().then(() => {
+    log.initialize();
     musicEndPoint(ipcMain);
 });

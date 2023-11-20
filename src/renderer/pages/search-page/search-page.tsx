@@ -6,6 +6,7 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { utils } from "../../../commons/utils";
 import { StoreContext } from "../../app";
+import log from "electron-log/renderer";
 
 export const SearchPage = () => {
     const [form] = useForm();
@@ -21,7 +22,7 @@ export const SearchPage = () => {
 
             navigate(`/detail`, { state: { url } });
         } catch (error) {
-            console.error(error);
+            log.error(error);
         }
     };
 
