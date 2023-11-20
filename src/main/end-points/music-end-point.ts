@@ -18,7 +18,7 @@ export const musicEndPoint = (ipcMain: Electron.IpcMain) => {
         let startTime = 0;
         const savedDir = "./downloads";
         fs.mkdirSync(savedDir, { recursive: true });
-        const downloadStream = ytdl.downloadFromInfo(info, { quality: "highest" });
+        const downloadStream = ytdl.downloadFromInfo(info, { filter: "audioandvideo" });
 
         const eventEmitter = e.sender;
 

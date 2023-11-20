@@ -11,7 +11,7 @@ interface SongStoreProps {
         channel: string,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         listener: (event: Electron.IpcRendererEvent, ...args: any[]) => void
-    ) => Electron.IpcRenderer;
+    ) => void;
 }
 export class SongStore {
     ipcRenderer: IpcRenderer;
@@ -19,7 +19,7 @@ export class SongStore {
         channel: string,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         listener: (event: Electron.IpcRendererEvent, ...args: any[]) => void
-    ) => Electron.IpcRenderer;
+    ) => void;
 
     @observable
     videoInfo: videoInfo | null = null;
