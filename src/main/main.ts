@@ -1,9 +1,8 @@
 import { app, BrowserWindow, ipcMain } from "electron";
+import log from "electron-log";
+import os from "os";
 import path from "path";
 import { musicEndPoint } from "./end-points/music-end-point";
-import log from "electron-log";
-import { setFfmpegPath, setFfprobePath } from "fluent-ffmpeg";
-import { is } from "electron-util";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -58,13 +57,14 @@ app.on("activate", () => {
     }
 });
 
-app.whenReady().then(() => {
-    log.initialize();
+app.whenReady()
+    .then(() => {
+        log.initialize();
 
-    if (is.windows) {
-        setFfmpegPath(path.join(__dirname, "./win/ffmpeg/bin/ffmpeg.exe"));
-        setFfprobePath(path.join(__dirname, "./win/ffmpeg/bin/ffprobe.exe"));
-    }
-
-    musicEndPoint(ipcMain);
-});
+        musicEndPoint(ipcMain);
+    })
+    .then(() => {
+        if (os.platform() === "win32") {
+            // setFfmpegPath("../../bin/win/ffmpeg/bin/ffmpeg.exe");
+        }
+    });

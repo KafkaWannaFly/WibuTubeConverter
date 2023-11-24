@@ -4,7 +4,11 @@ import ytdl from "ytdl-core";
 import { DownloadProcessDetail } from "../../commons/dto/download-process-detail";
 import { DownloadRequest } from "../../commons/dto/download-request";
 
+const DOWNLOAD_DIR = "./downloads";
+
 export const musicEndPoint = (ipcMain: Electron.IpcMain) => {
+    fs.mkdirSync(DOWNLOAD_DIR, { recursive: true });
+
     ipcMain.handle("get-song-info", async (_, arg: DownloadRequest) => {
         const url = arg.url;
         Logger.info(`Getting info from ${url}`);
@@ -16,13 +20,12 @@ export const musicEndPoint = (ipcMain: Electron.IpcMain) => {
         Logger.info(`Downloading ${info.videoDetails.title}`);
 
         let startTime = 0;
-        const savedDir = "./downloads";
-        fs.mkdirSync(savedDir, { recursive: true });
+
         const downloadStream = ytdl.downloadFromInfo(info, { filter: "audioandvideo" });
 
         const eventEmitter = e.sender;
 
-        downloadStream.pipe(fs.createWriteStream(`${savedDir}/${info.videoDetails.title}.mp4`));
+        downloadStream.pipe(fs.createWriteStream(`${DOWNLOAD_DIR}/${info.videoDetails.title}.mp4`));
 
         downloadStream.once("response", () => {
             startTime = Date.now();
