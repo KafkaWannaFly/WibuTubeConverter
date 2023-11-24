@@ -7,9 +7,6 @@ import { VitePlugin } from "@electron-forge/plugin-vite";
 
 const config: ForgeConfig = {
     packagerConfig: {
-        asar: {
-            unpackDir: "bin",
-        },
         extraResource: ["./bin"],
     },
     rebuildConfig: {},
